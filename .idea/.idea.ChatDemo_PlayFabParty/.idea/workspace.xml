@@ -5,18 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0afbe9cf-82f6-4d0b-968e-c0d46003d6d3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ChatDemo_PlayFabParty/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ChatDemo_PlayFabParty/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/PlayFabChatWrappers/ChatNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/PlayFabChatWrappers/ChatNetwork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/Ui/Chat/ButtonJoinNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/Ui/Chat/ButtonJoinNetwork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/Ui/Chat/ButtonLeaveNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/Ui/Chat/ButtonLeaveNetwork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/Ui/Chat/ButtonSendMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/Ui/Chat/ButtonSendMessage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/Ui/Chat/ButtonSetLanguage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/Ui/Chat/ButtonSetLanguage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/AndroidLogcatSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/AndroidLogcatSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatDemo_PlayFabParty/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatDemo_PlayFabParty/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Prefabs/UI/Chat/Canvas.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Prefabs/UI/Chat/Canvas.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Prefabs/UI/Chat/ChatSystems.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Prefabs/UI/Chat/ChatSystems.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatSystem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatSystem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatUiSystem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatUiSystem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMessageFormatter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMessageFormatter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChat.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChat.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChatErrorEvents.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChatErrorEvents.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChatEvents.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChatEvents.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatNetwork.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatSystem.cs.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +40,13 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/IReadOnlyDictionary.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/Channel3DProperties.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/IChannelSession.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/AccountId.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/Account.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/IVivoxService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e35836373b74b12bde8ba7fa4d53641167088/c9/b87d4c1a/PropertyChangedEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -85,7 +99,7 @@
       <option name="presentableId" value="Default" />
       <updated>1648460216480</updated>
       <workItem from="1648460220618" duration="3460000" />
-      <workItem from="1648531636860" duration="6875000" />
+      <workItem from="1648531636860" duration="15099000" />
     </task>
     <servers />
   </component>
@@ -95,6 +109,17 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

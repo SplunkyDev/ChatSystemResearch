@@ -10,7 +10,7 @@ using PlayFab.Party;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BSS.Octane.Chat
+namespace BSS.Octane.Chat.PlayFabParty
 {
     public class ChatSystem : MonoBehaviour
     {

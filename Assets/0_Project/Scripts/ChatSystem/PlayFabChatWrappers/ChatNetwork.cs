@@ -6,7 +6,7 @@ using BSS.Octane.Multiplayer.Chat.PlayFab;
 using PlayFab.Party;
 using UnityEngine;
 
-namespace BSS.Octane.Chat
+namespace BSS.Octane.Chat.PlayFabParty
 {
     public class ChatNetwork : IMultiplayerChat 
     {

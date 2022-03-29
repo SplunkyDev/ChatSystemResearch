@@ -6,25 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0afbe9cf-82f6-4d0b-968e-c0d46003d6d3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatDemo_PlayFabParty/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatDemo_PlayFabParty/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Prefabs/UI/Chat/Canvas.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Prefabs/UI/Chat/Canvas.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Prefabs/UI/Chat/ChatSystems.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Prefabs/UI/Chat/ChatSystems.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatSystem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatSystem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatUiSystem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/ChatUiSystem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMessageFormatter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMessageFormatter.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChat.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChat.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChatErrorEvents.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChatErrorEvents.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChatEvents.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Interfaces/IMultiplayerChatEvents.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatNetwork.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatSystem.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/Interfaces/IChatServiceEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/Interfaces/IChatServiceEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/Interfaces/IChatServiceLogin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/Interfaces/IChatServiceLogin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/Interfaces/IChatServiceMessages.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/Interfaces/IChatServiceMessages.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/VivoxLogin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/VivoxLogin.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,13 +26,25 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/IReadOnlyDictionary.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/Channel3DProperties.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/IChannelSession.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/Client.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/AccountId.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/Account.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/IVivoxService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/IParticipant.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/302639039d0843d49c2981d6678440f7db800/95/051fe1b1/IReadOnlyQueue`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/302639039d0843d49c2981d6678440f7db800/a1/d33f37d4/02000235pdb.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a92ad44406b431896773a464e9ec96e52e5b0/ac/35e1bb71/TimeSpan.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/302639039d0843d49c2981d6678440f7db800/6f/5e1cc022/02000236pdb.il" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e35836373b74b12bde8ba7fa4d53641167088/c9/b87d4c1a/PropertyChangedEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a92ad44406b431896773a464e9ec96e52e5b0/24/d85c5b03/IAsyncResult.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5406a456cf734443b3d02a7d123287f1299290/e4/f2f511c5/TimeSpan.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/302639039d0843d49c2981d6678440f7db800/6a/2c98bc80/IReadOnlyDictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/IReadOnlyDictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/VivoxUnity/IKeyedItemNotifyPropertyChanged.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/Account.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/29a6c1945f57447495fcad42118554c7363d00/02/7251b1e0/INotifyPropertyChanged.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@15.1.170000-pre.1/Runtime/IVivoxService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/302639039d0843d49c2981d6678440f7db800/e8/d6f1edfc/02000237.il" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -99,7 +97,7 @@
       <option name="presentableId" value="Default" />
       <updated>1648460216480</updated>
       <workItem from="1648460220618" duration="3460000" />
-      <workItem from="1648531636860" duration="15099000" />
+      <workItem from="1648531636860" duration="22068000" />
     </task>
     <servers />
   </component>

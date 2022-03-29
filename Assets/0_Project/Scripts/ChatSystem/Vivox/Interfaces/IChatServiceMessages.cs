@@ -7,16 +7,16 @@ namespace BSS.Octane.Chat.Vivox
 {
    public interface IChatServiceMessages
    {
-      void Initialize(IChannelSession aChannelSession);
+      void SetChannel(IChannelSession aChannelSession);
 
-      void SendChatMessageToAll(string aMessage);
+      void SendChatMessageToAll(string aMessage, AccountId aAccountID);
 
       //TODO: Send message to specific user
-      void SendChatMessageToUser(string aMessage);
+      void SendChatMessageToUser(string aMessage, AccountId aAccountID);
 
       //Triggered when a message is received
-      void RegisterOnChatMessageReceived(System.Action<object, QueueItemAddedEventArgs<IChannelTextMessage>> aAction);
-      void DeregisterOnChatMessageReceived(System.Action<object, QueueItemAddedEventArgs<IChannelTextMessage>> aAction);
+      void RegisterOnChatMessageReceived(System.EventHandler<QueueItemAddedEventArgs<IChannelTextMessage>> aEvent);
+      void DeregisterOnChatMessageReceived(System.EventHandler<QueueItemAddedEventArgs<IChannelTextMessage>> aEvent);
 
    }
 }

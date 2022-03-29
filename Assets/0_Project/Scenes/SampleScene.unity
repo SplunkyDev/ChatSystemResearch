@@ -164,7 +164,7 @@ PrefabInstance:
     - target: {fileID: 3339955178350587587, guid: 66fcde744b5656d4f9abafc6ab361eee, type: 3}
       propertyPath: m_inputFieldNetworkId
       value: 
-      objectReference: {fileID: 794043328}
+      objectReference: {fileID: 1087650060}
     - target: {fileID: 3339955178350587612, guid: 66fcde744b5656d4f9abafc6ab361eee, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -372,9 +372,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6141500694038499691, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1186025727}
+    - target: {fileID: 6141500694038499691, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CreateChatNetwork
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141500694038499691, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BSS.Octane.Chat.ChatSystem, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6141500694255538983, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141500694532167723, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 30.699951
       objectReference: {fileID: 0}
     - target: {fileID: 6141500694905640827, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
       propertyPath: m_Pivot.x
@@ -490,17 +506,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6141500695438054593, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
   m_PrefabInstance: {fileID: 794043323}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &794043328 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6141500694444008750, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
-  m_PrefabInstance: {fileID: 794043323}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +589,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1087650060 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6141500694439974549, guid: 1de3fa6107e34f142b74a4412f995807, type: 3}
+  m_PrefabInstance: {fileID: 794043323}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1186025727 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3339955178350587587, guid: 66fcde744b5656d4f9abafc6ab361eee, type: 3}
+  m_PrefabInstance: {fileID: 689344662}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537ceae7f5d0e0e4cb1de4788de1f221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1208527496
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,8 +1,10 @@
 using System;
-using Unity.Services.Vivox;
 using UnityEngine;
 using UnityEngine.UI;
 using VivoxUnity;
+#if PLATFORM_ANDROID
+using UnityEngine.Android;
+#endif
 
 namespace BSS.Octane.Chat.Vivox
 {
@@ -56,6 +58,13 @@ namespace BSS.Octane.Chat.Vivox
 
         private void Start()
         {
+#if PLATFORM_ANDROID
+            if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+            {
+                Permission.RequestUserPermission(Permission.Microphone);
+            }
+#endif
+
             DependencyContainer.instance.RegisterToContainer<ChatSystem>(this);
             m_chatServiceLogin = new VivoxLogin((b =>
             {

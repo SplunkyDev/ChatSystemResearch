@@ -44,8 +44,6 @@ namespace BSS.Octane.Chat.Vivox
         public void Login(string aDisplayName)
         {
             m_accountId = new Account(aDisplayName);
-            bool connectAudio = true;
-            bool connectText = true;
 
             m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_accountId);
             m_LoginSession.PropertyChanged += LoginSessionPropertyChange;                    

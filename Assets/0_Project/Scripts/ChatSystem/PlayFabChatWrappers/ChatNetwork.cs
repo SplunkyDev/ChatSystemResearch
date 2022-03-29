@@ -53,6 +53,9 @@ namespace BSS.Octane.Chat.PlayFabParty
         
         public void CleanUp()
         {
+            if(m_bCleanUpDone)
+                return;
+            
             m_bCleanUpDone = true;
             DependencyContainer.instance.DeregisterFromContainer<IMultiplayerChat>(this);
             DependencyContainer.instance.DeregisterFromContainer<IMultiplayerChatEvents>(m_chatMessages);

@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0afbe9cf-82f6-4d0b-968e-c0d46003d6d3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatDemo_PlayFabParty/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatDemo_PlayFabParty/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/PlayFabChatWrappers/ChatNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/PlayFabChatWrappers/ChatNetwork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/ChatSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/VivoxLogin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0_Project/Scripts/ChatSystem/Vivox/VivoxLogin.cs" afterDir="false" />
-    </list>
+    <list default="true" id="0afbe9cf-82f6-4d0b-968e-c0d46003d6d3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,7 +91,7 @@
       <option name="presentableId" value="Default" />
       <updated>1648460216480</updated>
       <workItem from="1648460220618" duration="3460000" />
-      <workItem from="1648531636860" duration="22565000" />
+      <workItem from="1648531636860" duration="23297000" />
     </task>
     <servers />
   </component>

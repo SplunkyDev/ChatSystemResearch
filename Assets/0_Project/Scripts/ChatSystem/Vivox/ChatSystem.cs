@@ -106,6 +106,7 @@ namespace BSS.Octane.Chat.Vivox
         {
             m_chatServiceMessages.SendChatMessageToAll(aMessage,m_chatServiceLogin.AccountId);
         }
+        
         #region Events
         private void OnParticipantAdded(object sender, KeyEventArg<string> keyEventArg)
         {

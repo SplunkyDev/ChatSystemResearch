@@ -87,9 +87,10 @@ namespace BSS.Octane.Chat.Vivox
 
                         // This puts you into an echo channel where you can hear yourself speaking.
                         // If you can hear yourself, then everything is working and you are ready to integrate Vivox into your project.
-                        JoinChannel("TestChannel", ChannelType.Echo, connectAudio, connectText);
+                        // JoinChannel("TestChannel", ChannelType.Echo, connectAudio, connectText);
                         // To test with multiple users, try joining a non-positional channel.
-                        // JoinChannel("MultipleUserTestChannel", ChannelType.NonPositional, connectAudio, connectText);
+                        Debug.Log($"[Vivox][LoginSessionPropertyChange] login state: {loginSession.State}. Join Channel being called ");
+                        m_chatSystem.OnLoginComplete(true);
                         break;
                     case LoginState.LoggedOut:
                         // Operations as needed
@@ -106,23 +107,25 @@ namespace BSS.Octane.Chat.Vivox
         {
             
         }
-
-        public void JoinChannel(string aChannelName, ChannelType aChannelType, bool aConnectAudio, bool aConnectText,
+        
+        public void CreateAndJoinChannel(string aChannelName, ChannelType aChannelType, bool aConnectAudio, bool aConnectText,
             bool aTransmissionSwitch = true, Channel3DProperties aProperties = null)
         {
             if (m_LoginSession.State == LoginState.LoggedIn)
             {
+                Debug.Log($"[Vivox][JoinChannel] Channel Name: {aChannelName} Channel Type: {aChannelType} ");
                 Channel channel = new Channel(aChannelName, aChannelType, aProperties);
                 IChannelSession channelSession = m_LoginSession.GetChannelSession(channel);
                 string tokenKey = channelSession.GetConnectToken();
                 m_dictChannel.Add(aChannelName,tokenKey);
+                Debug.Log($"[Vivox][JoinChannel]Begin connection: Token Key: {tokenKey} ");
                 channelSession.BeginConnect(aConnectAudio, aConnectText, aTransmissionSwitch, tokenKey, ar => 
                 {
                     try
                     {
                         channelSession.GetConnectToken(tokenKey, new TimeSpan(300));
                         channelSession.EndConnect(ar);
-                        
+                        Debug.Log($"[Vivox][JoinChannel]Connection complete: {ar.IsCompleted} ");
                         //Making sure if a channel is being created for the first time, instantiate ChatEvents and ChatMessages, otherwise use the pre-existing instance
                         if(!m_bChatEssentialsInitialized)
                         {
@@ -154,6 +157,13 @@ namespace BSS.Octane.Chat.Vivox
                 Debug.LogError("Can't join a channel when not logged in.");
             }
         }
+
+        public void JoinChannel(string aChannelName, ChannelType aChannelType, bool aConnectAudio,
+            bool aConnectText,
+            bool aTransmissionSwitch = true, Channel3DProperties aProperties = null)
+        {
+        }
+        
 
         public void LeaveChannel(ChannelId aChannelIdToLeave)
         {

@@ -46,6 +46,24 @@ namespace BSS.Octane.Chat.Vivox
             m_chatServiceEvents.RegisterOnUserStateChangel(OnParticipantValueUpdated);
         }
 
+        public void OnLoginComplete(bool aSuccess)
+        {
+            m_bLoginSuccess = aSuccess;
+            if (aSuccess)
+            {
+                m_textLoginStatus.text = "Login complete";
+                Debug.Log("[ChatSystem] Vivox login success");
+                m_rectPlayFabLogin.gameObject.SetActive(false);
+                m_rectJoinNetworkUi.gameObject.SetActive(true);
+                
+            }
+            else
+            {
+                Debug.Log("[ChatSystem] Vivox login failed");
+                m_textLoginStatus.text = "Login to vivox failed. Restart application.";
+            }
+        }
+        
         private void OnDestroy()
         {
              if(m_chatServiceEvents != null)
@@ -66,12 +84,15 @@ namespace BSS.Octane.Chat.Vivox
 #endif
 
             DependencyContainer.instance.RegisterToContainer<ChatSystem>(this);
+            m_textLoginStatus.text = "Initializing Vivox";
             m_chatServiceLogin = new VivoxLogin((b =>
             {
                 if (b)
                 {
+                    m_textLoginStatus.text = "Vivox initialized";
                     Debug.Log("[ChatSystem] Vivox initialization success");
-                    CreateAndJoinChannel("Bastion");
+                    m_textLoginStatus.text = "Logging into Vivox as Jeeth";
+                    m_chatServiceLogin.Login("Jeeth");
                 }
                 else
                 {
@@ -85,15 +106,16 @@ namespace BSS.Octane.Chat.Vivox
 
         public void CreateAndJoinNetwork()
         {
+           
+        }
+
+        public void CreateAndJoinChannel(string aChannelName)
+        {
             if (!m_bLoginSuccess)
             {
                 Debug.LogWarning("[ChatSystem] Login isn't complete yet");
                 return;
             }
-        }
-
-        public void CreateAndJoinChannel(string aChannelName)
-        {
             m_chatServiceLogin.Login(aChannelName);
         }
 
@@ -118,6 +140,7 @@ namespace BSS.Octane.Chat.Vivox
             ChannelId channelId = participant?.ParentChannelSession.Key;
             IChannelSession channelSession = participant?.ParentChannelSession;
             //Do what you want with the information
+            Debug.Log($"[ChatSystem][OnParticipantAdded] Account name: {strUsername} Channel Id: {channelId} Channel Session: {channelSession} ");
         }
         
         private void OnParticipantRemoved(object sender, KeyEventArg<string> keyEventArg)

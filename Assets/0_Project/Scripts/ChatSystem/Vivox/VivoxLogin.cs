@@ -6,7 +6,6 @@ using Unity.Services.Vivox;
 using VivoxUnity;
 using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 namespace BSS.Octane.Chat.Vivox
@@ -43,6 +42,7 @@ namespace BSS.Octane.Chat.Vivox
         
         public void Login(string aDisplayName)
         {
+            
             m_accountId = new Account(aDisplayName);
 
             m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_accountId);
@@ -113,9 +113,18 @@ namespace BSS.Octane.Chat.Vivox
         {
             if (m_LoginSession.State == LoginState.LoggedIn)
             {
+                
+                Debug.Log($"[Vivox][JoinChannel] Channel Count: {m_LoginSession.ChannelSessions.Count} ");
+                foreach (var channels in m_LoginSession.ChannelSessions)
+                {
+                    Debug.Log($"Channel Session: {channels}");
+                }
+                
                 Debug.Log($"[Vivox][JoinChannel] Channel Name: {aChannelName} Channel Type: {aChannelType} ");
                 Channel channel = new Channel(aChannelName, aChannelType, aProperties);
                 IChannelSession channelSession = m_LoginSession.GetChannelSession(channel);
+                // Subscribe to property changes for all channels.
+                channelSession.PropertyChanged += OnChannelPropertyChanged;
                 string tokenKey = channelSession.GetConnectToken();
                 m_dictChannel.Add(aChannelName,tokenKey);
                 Debug.Log($"[Vivox][JoinChannel]Begin connection: Token Key: {tokenKey} ");
@@ -123,15 +132,16 @@ namespace BSS.Octane.Chat.Vivox
                 {
                     try
                     {
-                        channelSession.GetConnectToken(tokenKey, new TimeSpan(300));
+                        channelSession.GetConnectToken(tokenKey, TimeSpan.FromSeconds(300));
                         channelSession.EndConnect(ar);
-                        Debug.Log($"[Vivox][JoinChannel]Connection complete: {ar.IsCompleted} ");
+                        m_chatSystem.OnChannelJoined(ar.IsCompleted);
+                        Debug.Log($"[Vivox][JoinChannel] Channel Count: {m_LoginSession.ChannelSessions.Count} ");
                         //Making sure if a channel is being created for the first time, instantiate ChatEvents and ChatMessages, otherwise use the pre-existing instance
                         if(!m_bChatEssentialsInitialized)
                         {
                             m_bChatEssentialsInitialized = true;
-                            m_chatServiceEvents = new ChatEvents(channelSession);
-                            m_chatServiceMessages = new ChatMessages(channelSession);
+                            m_chatServiceEvents = new ChatEventsService(this, channelSession);
+                            m_chatServiceMessages = new ChatMessageService(channelSession);
                             DependencyContainer.instance.RegisterToContainer<IChatServiceEvents>(m_chatServiceEvents);
                             DependencyContainer.instance.RegisterToContainer<IChatServiceMessages>(
                                 m_chatServiceMessages);
@@ -141,9 +151,10 @@ namespace BSS.Octane.Chat.Vivox
                         {
                             m_chatServiceEvents.SetChannel(channelSession);
                             m_chatServiceMessages.SetChannel(channelSession);
-                            //New channel, IChatSystem can register to the new channel as well. 
-                            m_chatSystem.Inject(m_chatServiceEvents, m_chatServiceMessages);
                         }
+                        
+                        //New channel, IChatSystem can register to the new channel as well. 
+                        m_chatSystem.Inject(m_chatServiceEvents, m_chatServiceMessages);
                     }
                     catch(Exception e)
                     {
@@ -163,7 +174,55 @@ namespace BSS.Octane.Chat.Vivox
             bool aTransmissionSwitch = true, Channel3DProperties aProperties = null)
         {
         }
-        
+
+        private void OnChannelPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            var channelSession = (IChannelSession)sender;
+
+            // This example only checks for AudioState changes.
+            if (propertyChangedEventArgs.PropertyName == "AudioState")
+            {
+                switch (channelSession.AudioState)
+                {
+                    case ConnectionState.Connecting:
+                        Debug.Log("Audio connecting in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Connected:
+                        Debug.Log("Audio connected in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Disconnecting:
+                        Debug.Log("Audio disconnecting in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Disconnected:
+                        Debug.Log("Audio disconnected in " + channelSession.Key.Name);
+                        break;
+                }
+            }
+            else  if (propertyChangedEventArgs.PropertyName == "TextState")
+            {
+                switch (channelSession.TextState)
+                {
+                    case ConnectionState.Connecting:
+                        Debug.Log("Text connecting in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Connected:
+                        Debug.Log("Text connected in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Disconnecting:
+                        Debug.Log("Text disconnecting in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Disconnected:
+                        Debug.Log("Text disconnected in " + channelSession.Key.Name);
+                        break;
+                }
+            }
+        }
 
         public void LeaveChannel(ChannelId aChannelIdToLeave)
         {
@@ -179,7 +238,9 @@ namespace BSS.Octane.Chat.Vivox
             }
             return m_dictChannel[aChannelName];
         }
-
+        
+       
+        
         public void Dispose()
         {
             m_LoginSession = null;

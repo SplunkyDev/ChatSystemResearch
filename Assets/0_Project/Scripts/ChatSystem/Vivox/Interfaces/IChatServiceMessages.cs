@@ -15,8 +15,8 @@ namespace BSS.Octane.Chat.Vivox
       void SendChatMessageToUser(string aMessage, AccountId aAccountID);
 
       //Triggered when a message is received
-      void RegisterOnChatMessageReceived(System.EventHandler<QueueItemAddedEventArgs<IChannelTextMessage>> aEvent);
-      void DeregisterOnChatMessageReceived(System.EventHandler<QueueItemAddedEventArgs<IChannelTextMessage>> aEvent);
-
+      void RegisterOnChatMessageReceived(System.Action<IMessage> aAction);
+      void DeregisterOnChatMessageReceived(System.Action<IMessage> aAction);
+      
    }
 }

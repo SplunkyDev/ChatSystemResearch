@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using VivoxUnity;
 
-namespace BSS.Octane.Chat.Vivox
+namespace BSS.Octane.Chat
 {
     public interface IChatServiceEvents
     {
         void SetChannel(IChannelSession aChannelSession);
 
-        //Triggered when a user joins the channel
-        void RegisterOnUserJoinedChannel(System.EventHandler<KeyEventArg<string>> aEvent);
-        void DeregisterOnUserJoinedChannel(System.EventHandler<KeyEventArg<string>> aEvent);
-
-        //Triggered when user leaves the channel
-        void RegisterOnUserLeaveChannel(System.EventHandler<KeyEventArg<string>> aEvent);
-        void DeregisterOnUserLeaveChannel(System.EventHandler<KeyEventArg<string>> aEvent);
-
+        //Triggered when a user joins/leaves the channel
+        void RegisterOnUserConnectionChange(System.Action<IChannelUserData> action);
+        void DeregisterOnUserConnectionChange(System.Action<IChannelUserData> action);
+        
         //Trigger when a user's state changes 
-        void RegisterOnUserStateChangel(System.EventHandler<ValueEventArg<string, IParticipant>> aEvent);
-        void DeregisterOnUserStateChangel(System.EventHandler<ValueEventArg<string, IParticipant>> aEvent);
+        void RegisterOnUserStateChange(System.Action<IChannelPropertyData> action);
+        void DeregisterOnUserStateChange(System.Action<IChannelPropertyData> action);
 
     }
 }

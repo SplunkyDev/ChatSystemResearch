@@ -200,6 +200,8 @@ namespace BSS.Octane.Chat.Vivox
         {
             var channelSession = (IChannelSession)sender;
 
+            Debug.Log(
+                $"[VivoxLogin][OnChannelPropertyChanged] Property change: {propertyChangedEventArgs.PropertyName}");
             // This example only checks for AudioState changes.
             if (propertyChangedEventArgs.PropertyName == "AudioState")
             {
@@ -240,6 +242,27 @@ namespace BSS.Octane.Chat.Vivox
 
                     case ConnectionState.Disconnected:
                         Debug.Log("Text disconnected in " + channelSession.Key.Name);
+                        break;
+                }
+            }
+            else if (propertyChangedEventArgs.PropertyName == "ChannelState")
+            {
+                switch (channelSession.ChannelState)
+                {
+                    case ConnectionState.Connecting:
+                        Debug.Log("Channel connecting in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Connected:
+                        Debug.Log("Channel connected in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Disconnecting:
+                        Debug.Log("Channel disconnecting in " + channelSession.Key.Name);
+                        break;
+
+                    case ConnectionState.Disconnected:
+                        Debug.Log("Channel disconnected in " + channelSession.Key.Name);
                         break;
                 }
             }

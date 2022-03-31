@@ -169,10 +169,31 @@ namespace BSS.Octane.Chat.Vivox
             }
         }
 
-        public void JoinChannel(string aChannelName, ChannelType aChannelType, bool aConnectAudio,
+        public void JoinChannel(string aTokenKey, string aChannelName, ChannelType aChannelType, bool aConnectAudio,
             bool aConnectText,
             bool aTransmissionSwitch = true, Channel3DProperties aProperties = null)
         {
+            var channel = new Channel( aChannelName,aChannelType,aProperties );
+            var channelSession = m_LoginSession.GetChannelSession(channel);
+
+            // Subscribe to property changes for all channels.
+            channelSession.PropertyChanged += OnChannelPropertyChanged;
+
+            // Connect to channel
+            channelSession.BeginConnect(true, true, true, aTokenKey, ar =>
+            {
+                try
+                {
+                    channelSession.EndConnect(ar);
+                }
+                catch (Exception e)
+                {
+                    // Handle error
+                    return;
+                }
+
+                // Reaching this point indicates no error occurred, but the user is still not “in the channel” until the AudioState and/or TextState are in ConnectionState.Connected.
+            });
         }
 
         private void OnChannelPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)

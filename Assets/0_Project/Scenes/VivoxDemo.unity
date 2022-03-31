@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &568703039 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8520761851377175253, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
-  m_PrefabInstance: {fileID: 2523473287816350784}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,24 +310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1072575395 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8520761851446151581, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
-  m_PrefabInstance: {fileID: 2523473287816350784}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1072575397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072575395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84a7b7968c67dec42b8fe9816ae6998e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_inputFieldMessage: {fileID: 568703039}
 --- !u!1 &1208527496
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,22 +376,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1271064528 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
-  m_PrefabInstance: {fileID: 4688791327651183804}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc60b3638a3dd5a4db33de5787dac0f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1356071692 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8520761851837756784, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
-  m_PrefabInstance: {fileID: 2523473287816350784}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1487790172 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8520761851437165544, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
@@ -504,25 +459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2099746091 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8520761851437165551, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
-  m_PrefabInstance: {fileID: 2523473287816350784}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2099746092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099746091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c941d79b142f5a1448bb6fabe1e90fd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gTextMessage: {fileID: 2689751322365890239, guid: 6383ec60cfc3dba4587c38971980290a, type: 3}
-  m_gContent: {fileID: 1356071692}
 --- !u!1001 &2523473287816350784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -618,12 +554,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Vivox
       objectReference: {fileID: 0}
-    - target: {fileID: 8520761851810021008, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1271064528}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
+--- !u!114 &2523473287816350785 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4260849211283737252, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
+  m_PrefabInstance: {fileID: 2523473287816350784}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4688791327651183804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -635,6 +578,10 @@ PrefabInstance:
       propertyPath: m_rectChatUi
       value: 
       objectReference: {fileID: 1487790172}
+    - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
+      propertyPath: m_strUserName
+      value: Jeeth
+      objectReference: {fileID: 0}
     - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
       propertyPath: m_textLoginStatus
       value: 
@@ -651,6 +598,10 @@ PrefabInstance:
       propertyPath: m_inputFieldNetworkId
       value: 
       objectReference: {fileID: 2043896482}
+    - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
+      propertyPath: m_inputFieldChannelName
+      value: 
+      objectReference: {fileID: 2523473287816350785}
     - target: {fileID: 8018669406283498216, guid: 055547b21d698874196a620282a183a7, type: 3}
       propertyPath: m_Name
       value: ChatSystems

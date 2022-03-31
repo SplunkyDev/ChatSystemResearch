@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 namespace  BSS.Octane
 {
-    public class ButtonJoinVivoxNetwork  : UiButton
+    public class ButtonJoinVivoxChannel  : UiButton
     {
         #region Serialize fields
         [SerializeField] private InputField m_inputFieldNetworkId;
+        [SerializeField] private InputField m_inputChannelName;
         #endregion
             
         #region Private fields
@@ -24,7 +25,7 @@ namespace  BSS.Octane
         {
             if(m_chatSystem != null)
             {
-                m_chatSystem.JoinChannel(m_inputFieldNetworkId.text);
+                m_chatSystem.JoinChannel(m_inputFieldNetworkId.text, m_inputChannelName.text);
             }
             base.OnPointerUp(eventData);
             Debug.Log($"[UiButton] Button Clicked: {GetType()}");

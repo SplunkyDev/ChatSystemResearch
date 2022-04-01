@@ -37,8 +37,6 @@ namespace BSS.Octane.Chat.Vivox
             VivoxClient = VivoxService.Instance.Client;
             DependencyContainer.instance.RegisterToContainer<IChatLoginService>(this);
             OnVivoxInitialized(VivoxService.Instance.IsAuthenticated);
-
-         
         }
         
        
@@ -125,15 +123,16 @@ namespace BSS.Octane.Chat.Vivox
                 // Subscribe to property changes for all channels.
                 channelSession.PropertyChanged += OnChannelPropertyChanged;
                 string tokenKey = channelSession.GetConnectToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz",TimeSpan.FromSeconds(90));
-
-                tokenKey = AccessToken.Token_f("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz",
-                    "13469-chat_-95312-test",
-                    AccessToken.SecondsSinceUnixEpochPlusDuration(TimeSpan.FromSeconds(90)),
-                    "join",
-                    UnityEngine.Random.Range(0, 999),
-                    "unmute",
-                    "sip:"+m_accountId.DisplayName+".@mtu1xp.vivox.com", "sip:confctl-g-"+aChannelName+".@mtu1xp.vivox.com"
-                );
+                
+                //https://docs.vivox.com/v5/general/unity/15_1_160000/en-us/access-token-guide/generate-token-secure-server/example-c-sharp.htm?tocpath=Vivox%20Unity%20SDK%20documentation%7CAccess%20Token%20Developer%20Guide%7CGenerate%20a%20token%20on%20a%20secure%20server%7C_____2
+                // tokenKey = AccessToken.Token_f("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz",
+                //     "13469-chat_-95312-test",
+                //     AccessToken.SecondsSinceUnixEpochPlusDuration(TimeSpan.FromSeconds(90)),
+                //     "join",
+                //     UnityEngine.Random.Range(0, 999),
+                //     "unmute",
+                //     "sip:"+m_accountId.DisplayName+".@mtu1xp.vivox.com", "sip:confctl-g-"+aChannelName+".@mtu1xp.vivox.com"
+                // );
                 
                 m_dictChannel.Add(aChannelName,tokenKey);
                 Debug.Log($"[Vivox][JoinChannel]Begin connection: Token Key: {tokenKey} and Channel Name: {aChannelName} ");

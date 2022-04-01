@@ -466,6 +466,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 669713697705904061, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.6999512
+      objectReference: {fileID: 0}
     - target: {fileID: 8520761850659961657, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -562,6 +566,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8520761851694613846, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.6999512
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520761852106195848, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
 --- !u!114 &2523473287816350785 stripped
@@ -588,7 +600,7 @@ PrefabInstance:
       objectReference: {fileID: 1487790172}
     - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
       propertyPath: m_strUserName
-      value: Jeeth
+      value: Link
       objectReference: {fileID: 0}
     - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
       propertyPath: m_textLoginStatus

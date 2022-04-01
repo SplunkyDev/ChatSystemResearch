@@ -85,7 +85,7 @@ namespace BSS.Octane.Chat.Vivox
                     case LoginState.LoggedIn:
                         bool connectAudio = true;
                         bool connectText = true;
-                        Debug.Log($"[Vivox][LoginSessionPropertyChange] login state: {loginSession.State}. Join Channel being called ");
+                        Debug.Log($"[Vivox][LoginSessionPropertyChange] login state: {loginSession.State} ");
                         m_chatSystem.OnLoginComplete(true);
                         break;
                     case LoginState.LoggedOut:
@@ -123,7 +123,7 @@ namespace BSS.Octane.Chat.Vivox
                 channelSession.PropertyChanged += OnChannelPropertyChanged;
                 string tokenKey = channelSession.GetConnectToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz",TimeSpan.FromSeconds(90));
                 m_dictChannel.Add(aChannelName,tokenKey);
-                Debug.Log($"[Vivox][JoinChannel]Begin connection: Token Key: {tokenKey} ");
+                Debug.Log($"[Vivox][JoinChannel]Begin connection: Token Key: {tokenKey} and Channel Name: {aChannelName} ");
                 channelSession.BeginConnect(aConnectAudio, aConnectText, aTransmissionSwitch, tokenKey, ar => 
                 {
                     try

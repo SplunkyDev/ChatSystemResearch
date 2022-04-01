@@ -125,14 +125,13 @@ namespace BSS.Octane.Chat.Vivox
                 IChannelSession channelSession = m_LoginSession.GetChannelSession(channel);
                 // Subscribe to property changes for all channels.
                 channelSession.PropertyChanged += OnChannelPropertyChanged;
-                string tokenKey = channelSession.GetConnectToken();
+                string tokenKey = channelSession.GetConnectToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz",TimeSpan.FromSeconds(90));
                 m_dictChannel.Add(aChannelName,tokenKey);
                 Debug.Log($"[Vivox][JoinChannel]Begin connection: Token Key: {tokenKey} ");
                 channelSession.BeginConnect(aConnectAudio, aConnectText, aTransmissionSwitch, tokenKey, ar => 
                 {
                     try
                     {
-                        channelSession.GetConnectToken(tokenKey, TimeSpan.FromSeconds(300));
                         channelSession.EndConnect(ar);
                         m_chatSystem.OnChannelJoined(ar.IsCompleted);
                         Debug.Log($"[Vivox][JoinChannel] Channel Count: {m_LoginSession.ChannelSessions.Count} ");
@@ -140,8 +139,11 @@ namespace BSS.Octane.Chat.Vivox
                         if(!m_bChatEssentialsInitialized)
                         {
                             m_bChatEssentialsInitialized = true;
+                            //Creates intance of IChatEventsService, this instance register to events of the CHannelSession
                             m_chatServiceEvents = new ChatEventsService(this, channelSession);
+                            //Creates instance if ChatMessageService, this implements the messaging API
                             m_chatServiceMessages = new ChatMessageService(channelSession);
+                            //Registering the instances to the dependency container so that other services gcan get their reference if required
                             DependencyContainer.instance.RegisterToContainer<IChatServiceEvents>(m_chatServiceEvents);
                             DependencyContainer.instance.RegisterToContainer<IChatServiceMessages>(
                                 m_chatServiceMessages);

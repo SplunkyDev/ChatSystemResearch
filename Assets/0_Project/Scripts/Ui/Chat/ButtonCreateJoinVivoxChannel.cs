@@ -2,34 +2,32 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace BSS.Octane
+public class ButtonCreateJoinVivoxChannel : UiButton
 {
-    public class ButtonCreateJoinVivoxChannel : UiButton
+    #region Serialize fields
+    [SerializeField] private InputField m_inputChannelName;
+    #endregion
+
+    #region Private fields
+
+    private Chat.IChatSystem m_chatSystem;
+
+    #endregion
+
+    private void Start()
     {
-        #region Serialize fields
-        [SerializeField] private InputField m_inputChannelName;
-        #endregion
+        m_chatSystem = DependencyContainer.instance.GetFromContainer<Chat.IChatSystem>();
+    }
 
-        #region Private fields
-
-        private BSS.Octane.Chat.IChatSystem m_chatSystem;
-
-        #endregion
-
-        private void Start()
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        if (m_chatSystem != null)
         {
-            m_chatSystem = DependencyContainer.instance.GetFromContainer<BSS.Octane.Chat.IChatSystem>();
+            m_chatSystem.CreateAndJoinChannel( m_inputChannelName.text);
         }
 
-        public override void OnPointerUp(PointerEventData eventData)
-        {
-            if (m_chatSystem != null)
-            {
-                m_chatSystem.CreateAndJoinChannel( m_inputChannelName.text);
-            }
-
-            base.OnPointerUp(eventData);
-            Debug.Log($"[UiButton] Button Clicked: {GetType()}");
-        }
+        base.OnPointerUp(eventData);
+        Debug.Log($"[UiButton] Button Clicked: {GetType()}");
     }
 }
+

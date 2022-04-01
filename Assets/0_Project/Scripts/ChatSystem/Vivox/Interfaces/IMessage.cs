@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BSS.Octane.Chat
+namespace Chat
 {
     public interface IMessage
     {

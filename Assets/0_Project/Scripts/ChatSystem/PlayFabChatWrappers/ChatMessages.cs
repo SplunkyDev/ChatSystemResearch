@@ -2,7 +2,7 @@ using System;
 using PlayFab.Party;
 using UnityEngine;
 
-namespace BSS.Octane.Chat.PlayFab
+namespace Chat.PlayFab
 {
     public class ChatMessages : IMultiplayerChatEvents , IDisposable
     {

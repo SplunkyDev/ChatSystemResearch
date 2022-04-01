@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using BSS.Octane.Chat;
-using BSS.Octane.Chat.PlayFab;
+using Chat.PlayFab;
+using Chat;
 using PlayFab.Party;
 using UnityEngine;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace BSS.Octane.Chat
+namespace Chat
 {
     public class ButtonSendVivoxMessage : UiButton
     {

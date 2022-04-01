@@ -1,6 +1,6 @@
-using BSS.Octane.Chat.Vivox;
+using Chat.Vivox;
 
-namespace BSS.Octane.Chat
+namespace Chat
 {
     public interface IChatSystem
     {

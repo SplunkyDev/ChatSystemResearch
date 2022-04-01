@@ -1,7 +1,7 @@
 using System;
 using PlayFab.Party;
 
-namespace BSS.Octane.Chat.PlayFab
+namespace Chat.PlayFab
 {
     public interface IMultiplayerChatEvents
     {

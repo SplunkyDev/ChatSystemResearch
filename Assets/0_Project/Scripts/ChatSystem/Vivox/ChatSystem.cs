@@ -7,7 +7,7 @@ using VivoxUnity;
 using UnityEngine.Android;
 #endif
 
-namespace BSS.Octane.Chat.Vivox
+namespace Chat.Vivox
 {
     public class ChatSystem : MonoBehaviour , IChatSystem
     {

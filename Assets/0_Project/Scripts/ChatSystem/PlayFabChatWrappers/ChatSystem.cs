@@ -5,12 +5,12 @@ using UnityEngine.Android;
 using System.Collections.Generic;
 using PlayFab;
 using PlayFab.ClientModels;
-using BSS.Octane.Multiplayer.Chat.PlayFab;
+using Chat.PlayFab;
 using PlayFab.Party;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BSS.Octane.Chat.PlayFabParty
+namespace Chat.PlayFabParty
 {
     public class ChatSystem : MonoBehaviour
     {

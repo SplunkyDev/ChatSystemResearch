@@ -8,7 +8,7 @@ using System.ComponentModel;
 using UnityEngine;
 using VivoxAccessToken;
 
-namespace BSS.Octane.Chat.Vivox
+namespace Chat.Vivox
 {
     public class VivoxLogin : IChatLoginService , IDisposable
     {

@@ -1,6 +1,6 @@
 using VivoxUnity;
 
-namespace BSS.Octane.Chat.Vivox
+namespace Chat.Vivox
 {
    public interface IChatLoginService
    {

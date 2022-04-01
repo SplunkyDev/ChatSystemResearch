@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using BSS.Octane.Chat.Vivox;
+using Chat.Vivox;
 using UnityEngine;
 using VivoxUnity;
 
-namespace BSS.Octane.Chat.Vivox
+namespace Chat.Vivox
 {
     public class ChatEventsService : IChatEventsService, IDisposable
     {

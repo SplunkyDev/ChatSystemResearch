@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using BSS.Octane.Chat;
-using BSS.Octane.Chat.Vivox;
+using Chat;
+using Chat.Vivox;
 using UnityEngine;
 
 public class ChatSystemUi : MonoBehaviour

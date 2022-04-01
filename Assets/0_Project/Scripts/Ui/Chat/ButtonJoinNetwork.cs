@@ -1,4 +1,4 @@
-using BSS.Octane.Chat.PlayFabParty;
+using Chat.PlayFabParty;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

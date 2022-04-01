@@ -554,8 +554,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Vivox
       objectReference: {fileID: 0}
-    - target: {fileID: 8520761851590851804, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 8520761852305687437, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
+      propertyPath: m_FontData.m_HorizontalOverflow
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using BSS.Octane.Chat.PlayFab;
-using BSS.Octane.Multiplayer.Chat.PlayFab;
+using Chat.PlayFab;
 using PlayFab.Party;
 using UnityEngine;
 
-namespace BSS.Octane.Chat.PlayFabParty
+namespace Chat.PlayFabParty
 {
     public class ChatNetwork : IMultiplayerChat 
     {

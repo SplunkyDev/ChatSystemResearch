@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PlayFab.Party;
 
-namespace BSS.Octane.Multiplayer.Chat.PlayFab
+namespace Chat.PlayFab
 {
     public interface IMultiplayerChat
     {

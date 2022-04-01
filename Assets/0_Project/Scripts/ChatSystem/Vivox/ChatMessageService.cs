@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VivoxUnity;
 
-namespace BSS.Octane.Chat.Vivox
+namespace Chat.Vivox
 {
     public class ChatMessageService : IChatMessageService, IDisposable
     {

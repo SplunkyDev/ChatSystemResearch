@@ -1,8 +1,7 @@
 using PlayFab.Party;
-using BSS.Octane.Chat.PlayFab;
 using UnityEngine;
 
-namespace BSS.Octane
+namespace Chat.PlayFab
 {
     public class ChatErrors : IMultiplayerChatErrorEvents
     {

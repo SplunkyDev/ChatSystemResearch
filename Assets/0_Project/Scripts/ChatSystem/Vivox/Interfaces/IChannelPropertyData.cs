@@ -1,5 +1,5 @@
 
-namespace BSS.Octane.Chat
+namespace Chat
 {
     public interface IChannelPropertyData
     {

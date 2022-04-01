@@ -105,7 +105,7 @@ namespace BSS.Octane.Chat.Vivox
             m_rectVivoxLogin.gameObject.SetActive(true);
             DependencyContainer.instance.RegisterToContainer<IChatSystem>(this);
             m_textLoginStatus.text = "Initializing Vivox";
-            _mChatLoginService = new Vivox((b =>
+            _mChatLoginService = new VivoxLogin((b =>
             {
                 if (b)
                 {

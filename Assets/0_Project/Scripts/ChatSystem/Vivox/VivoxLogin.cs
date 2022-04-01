@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace BSS.Octane.Chat.Vivox
 {
-    public class Vivox : IChatLoginService , IDisposable
+    public class VivoxLogin : IChatLoginService , IDisposable
     {
         private ILoginSession m_LoginSession;
         private AccountId m_accountId;
@@ -23,7 +23,7 @@ namespace BSS.Octane.Chat.Vivox
         public Client Client { get; private set;  }
         public AccountId AccountId { get => m_accountId; }
 
-        public Vivox(Action<bool> OnVivoxInitialized, IChatSystem aChatSystem)
+        public VivoxLogin(Action<bool> OnVivoxInitialized, IChatSystem aChatSystem)
         {
             InitializeVivox(OnVivoxInitialized);
             m_chatSystem = aChatSystem;

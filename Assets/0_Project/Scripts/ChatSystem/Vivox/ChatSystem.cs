@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using VivoxUnity;
 #if PLATFORM_ANDROID
@@ -11,6 +11,7 @@ namespace BSS.Octane.Chat.Vivox
 {
     public class ChatSystem : MonoBehaviour , IChatSystem
     {
+        
         #region Serialize fields
 
         [SerializeField] private InputField m_inputFieldNetworkId,m_inputFieldChannelName;
@@ -76,7 +77,8 @@ namespace BSS.Octane.Chat.Vivox
                     m_rectJoinNetworkUi.gameObject.SetActive(false);
                     m_rectChatUi.gameObject.SetActive(true);
                 }
-
+                
+                // StartCoroutine(VivoxUnityRun());
               
             }
             else
@@ -84,7 +86,22 @@ namespace BSS.Octane.Chat.Vivox
                 Debug.Log("[ChatSystem] Vivox channel not joined");
             }
         }
-
+        
+        // private IEnumerator VivoxUnityRun()
+        // {
+        //     while (VxClient.Instance.Started)
+        //     {
+        //         try
+        //         {
+        //             Client.RunOnce();               
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             Debug.LogError("Error: " + e.Message); 
+        //         }
+        //         yield return new WaitForSeconds(0.01f);
+        //     }
+        // }
 
         private void OnDestroy()
         {

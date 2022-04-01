@@ -80,7 +80,7 @@ namespace BSS.Octane.Chat.Vivox
             {
                 BindChannelSessionHandlers(false, channelSession); //Unsubscribe from events here
                 channelId = null;
-                ILoginSession loginSession = _mChatLoginService.Client.GetLoginSession(_mChatLoginService.AccountId);
+                ILoginSession loginSession = _mChatLoginService.VivoxClient.GetLoginSession(_mChatLoginService.AccountId);
                 loginSession.DeleteChannelSession(channelSession.Channel);
             }
         }

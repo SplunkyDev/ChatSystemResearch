@@ -6,7 +6,7 @@ using Unity.Services.Vivox;
 using VivoxUnity;
 using System.ComponentModel;
 using UnityEngine;
-
+using VivoxAccessToken;
 
 namespace BSS.Octane.Chat.Vivox
 {
@@ -19,8 +19,8 @@ namespace BSS.Octane.Chat.Vivox
         private IChatMessageService _mChatMessageService;
         private IChatSystem m_chatSystem;
         private bool m_bChatEssentialsInitialized = false;
-
-        public Client Client { get; private set;  }
+        
+        public Client VivoxClient { get; private set;  }
         public AccountId AccountId { get => m_accountId; }
 
         public VivoxLogin(Action<bool> OnVivoxInitialized, IChatSystem aChatSystem)
@@ -34,14 +34,17 @@ namespace BSS.Octane.Chat.Vivox
             await UnityServices.InitializeAsync();
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             VivoxService.Instance.Initialize();
-            Client = VivoxService.Instance.Client;
+            VivoxClient = VivoxService.Instance.Client;
             DependencyContainer.instance.RegisterToContainer<IChatLoginService>(this);
             OnVivoxInitialized(VivoxService.Instance.IsAuthenticated);
+
+         
         }
+        
+       
         
         public void Login(string aDisplayName)
         {
-            
             m_accountId = new Account(aDisplayName);
 
             m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_accountId);
@@ -122,6 +125,16 @@ namespace BSS.Octane.Chat.Vivox
                 // Subscribe to property changes for all channels.
                 channelSession.PropertyChanged += OnChannelPropertyChanged;
                 string tokenKey = channelSession.GetConnectToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz",TimeSpan.FromSeconds(90));
+
+                tokenKey = AccessToken.Token_f("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz",
+                    "13469-chat_-95312-test",
+                    AccessToken.SecondsSinceUnixEpochPlusDuration(TimeSpan.FromSeconds(90)),
+                    "join",
+                    UnityEngine.Random.Range(0, 999),
+                    "unmute",
+                    "sip:"+m_accountId.DisplayName+".@mtu1xp.vivox.com", "sip:confctl-g-"+aChannelName+".@mtu1xp.vivox.com"
+                );
+                
                 m_dictChannel.Add(aChannelName,tokenKey);
                 Debug.Log($"[Vivox][JoinChannel]Begin connection: Token Key: {tokenKey} and Channel Name: {aChannelName} ");
                 channelSession.BeginConnect(aConnectAudio, aConnectText, aTransmissionSwitch, tokenKey, ar => 

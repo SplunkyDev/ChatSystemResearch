@@ -4,7 +4,7 @@ namespace BSS.Octane.Chat.Vivox
 {
    public interface IChatLoginService
    {
-      public Client Client { get; }
+      public Client VivoxClient { get; }
       public AccountId AccountId { get; }
       
       void Login(string aDisplayName);

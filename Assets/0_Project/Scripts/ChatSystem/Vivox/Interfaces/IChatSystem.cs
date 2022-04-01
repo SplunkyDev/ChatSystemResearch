@@ -9,7 +9,6 @@ namespace BSS.Octane.Chat
         void OnLoginComplete(bool aSuccess);
         void OnChannelJoined(bool aSuccess);
         void CreateAndJoinChannel(string aChannelName);
-        void JoinChannel(string aTokenKey, string aChannelName);
         void SendChatMessageToAll(string aMessage);
         
         //TODO: Implement specific player message

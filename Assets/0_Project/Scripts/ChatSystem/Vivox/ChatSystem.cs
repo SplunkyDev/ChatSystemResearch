@@ -153,12 +153,7 @@ namespace BSS.Octane.Chat.Vivox
             m_bCreatedChannel = true;
             _mChatLoginService.CreateAndJoinChannel(aChannelName, ChannelType.NonPositional, true, true, true, null);
         }
-
-        public void JoinChannel(string aChannelToken, string aChannelName)
-        {
-            _mChatLoginService.JoinChannel(aChannelToken ,aChannelName, ChannelType.NonPositional, true, true, true, null);
-        }
-
+        
         public void SendChatMessageToAll(string aMessage)
         {
             _mChatMessageService.SendChatMessageToAll(aMessage,_mChatLoginService.AccountId);

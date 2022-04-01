@@ -11,9 +11,6 @@ namespace BSS.Octane.Chat.Vivox
       void Logout();
       void CreateAndJoinChannel(string aChannelName, ChannelType aChannelType, bool aConnectAudio, bool aConnectText,
          bool aTransmissionSwitch = true, Channel3DProperties aProperties = null);
-      void JoinChannel(string aTokenKey, string aChannelName, ChannelType aChannelType, bool aConnectAudio,
-         bool aConnectText,
-         bool aTransmissionSwitch = true, Channel3DProperties aProperties = null);
       void LeaveChannel(ChannelId aChannelIdToLeave);
       string GetTokenId(string aChannelName);
    }

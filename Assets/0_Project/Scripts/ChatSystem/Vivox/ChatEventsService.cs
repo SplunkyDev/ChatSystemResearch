@@ -7,17 +7,17 @@ using VivoxUnity;
 
 namespace BSS.Octane.Chat.Vivox
 {
-    public class ChatEventsService : IChatServiceEvents, IDisposable
+    public class ChatEventsService : IChatEventsService, IDisposable
     {
-        private IChatServiceLogin m_chatServiceLogin;
+        private IChatLoginService _mChatLoginService;
         private IChannelSession m_channelSession;
 
         private System.Action<IChannelPropertyData> m_channelDataAction;
         private System.Action<IChannelUserData> m_channelUserAction;
 
-        public ChatEventsService(IChatServiceLogin aChatServiceLogin, IChannelSession aChannelSession)
+        public ChatEventsService(IChatLoginService aChatLoginService, IChannelSession aChannelSession)
         {
-            m_chatServiceLogin = aChatServiceLogin;
+            _mChatLoginService = aChatLoginService;
             SetChannel(aChannelSession);
         }
 
@@ -80,7 +80,7 @@ namespace BSS.Octane.Chat.Vivox
             {
                 BindChannelSessionHandlers(false, channelSession); //Unsubscribe from events here
                 channelId = null;
-                ILoginSession loginSession = m_chatServiceLogin.Client.GetLoginSession(m_chatServiceLogin.AccountId);
+                ILoginSession loginSession = _mChatLoginService.Client.GetLoginSession(_mChatLoginService.AccountId);
                 loginSession.DeleteChannelSession(channelSession.Channel);
             }
         }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using VivoxUnity;
 #if PLATFORM_ANDROID
@@ -14,15 +15,16 @@ namespace BSS.Octane.Chat.Vivox
 
         [SerializeField] private InputField m_inputFieldNetworkId,m_inputFieldChannelName;
         [SerializeField] private Text m_textLoginStatus;
-        [SerializeField] private RectTransform m_rectJoinNetworkUi, m_rectChatUi, m_rectPlayFabLogin;
+        [SerializeField] private RectTransform m_rectJoinNetworkUi, m_rectChatUi;
+        [SerializeField] private RectTransform m_rectVivoxLogin;
         [SerializeField] private string m_strUserName;
         #endregion
 
         #region Private fields
 
-        private IChatServiceLogin m_chatServiceLogin;
-        private IChatServiceMessages m_chatServiceMessages;
-        private IChatServiceEvents m_chatServiceEvents;
+        private IChatLoginService _mChatLoginService;
+        private IChatMessageService _mChatMessageService;
+        private IChatEventsService _mChatEventsService;
 
         private bool m_bLoginSuccess = false, m_bCreatedChannel = false;
 
@@ -34,12 +36,12 @@ namespace BSS.Octane.Chat.Vivox
 
         #endregion
         
-        public void Inject(IChatServiceEvents aChatServiceEvents, IChatServiceMessages aChatServiceMessages)
+        public void Inject(IChatEventsService aChatEventsService, IChatMessageService aChatMessageService)
         {
-            m_chatServiceEvents = aChatServiceEvents;
-            m_chatServiceEvents.RegisterOnUserConnectionChange(OnUserConnectStateChange);
+            _mChatEventsService = aChatEventsService;
+            _mChatEventsService.RegisterOnUserConnectionChange(OnUserConnectStateChange);
             
-            m_chatServiceMessages = aChatServiceMessages;
+            _mChatMessageService = aChatMessageService;
             
             ConnectionComplete = true;
         }
@@ -51,7 +53,7 @@ namespace BSS.Octane.Chat.Vivox
             {
                 m_textLoginStatus.text = "Login complete";
                 Debug.Log("[ChatSystem] Vivox login success");
-                m_rectPlayFabLogin.gameObject.SetActive(false);
+                m_rectVivoxLogin.gameObject.SetActive(false);
                 m_rectJoinNetworkUi.gameObject.SetActive(true);
                 
             }
@@ -67,7 +69,7 @@ namespace BSS.Octane.Chat.Vivox
             if (aSuccess)
             {
                 Debug.Log("[ChatSystem] Vivox channel joined");
-                m_inputFieldNetworkId.text = m_chatServiceLogin.GetTokenId(m_inputFieldChannelName.text);
+                m_inputFieldNetworkId.text = _mChatLoginService.GetTokenId(m_inputFieldChannelName.text);
                 
                 if(!m_bCreatedChannel)
                 {
@@ -86,9 +88,9 @@ namespace BSS.Octane.Chat.Vivox
 
         private void OnDestroy()
         {
-            if (m_chatServiceEvents != null)
+            if (_mChatEventsService != null)
             {
-                m_chatServiceEvents.DeregisterOnUserConnectionChange(OnUserConnectStateChange);
+                _mChatEventsService.DeregisterOnUserConnectionChange(OnUserConnectStateChange);
             }
         }
 
@@ -100,17 +102,17 @@ namespace BSS.Octane.Chat.Vivox
                 Permission.RequestUserPermission(Permission.Microphone);
             }
 #endif
-
+            m_rectVivoxLogin.gameObject.SetActive(true);
             DependencyContainer.instance.RegisterToContainer<IChatSystem>(this);
             m_textLoginStatus.text = "Initializing Vivox";
-            m_chatServiceLogin = new VivoxLogin((b =>
+            _mChatLoginService = new Vivox((b =>
             {
                 if (b)
                 {
                     m_textLoginStatus.text = "Vivox initialized";
                     Debug.Log("[ChatSystem] Vivox initialization success");
                     m_textLoginStatus.text = "Logging into Vivox as "+m_strUserName;
-                    m_chatServiceLogin.Login(m_strUserName);
+                    _mChatLoginService.Login(m_strUserName);
                 }
                 else
                 {
@@ -132,17 +134,17 @@ namespace BSS.Octane.Chat.Vivox
             }
 
             m_bCreatedChannel = true;
-            m_chatServiceLogin.CreateAndJoinChannel(aChannelName, ChannelType.NonPositional, true, true, true, null);
+            _mChatLoginService.CreateAndJoinChannel(aChannelName, ChannelType.NonPositional, true, true, true, null);
         }
 
         public void JoinChannel(string aChannelToken, string aChannelName)
         {
-            m_chatServiceLogin.JoinChannel(aChannelToken ,aChannelName, ChannelType.NonPositional, true, true, true, null);
+            _mChatLoginService.JoinChannel(aChannelToken ,aChannelName, ChannelType.NonPositional, true, true, true, null);
         }
 
         public void SendChatMessageToAll(string aMessage)
         {
-            m_chatServiceMessages.SendChatMessageToAll(aMessage,m_chatServiceLogin.AccountId);
+            _mChatMessageService.SendChatMessageToAll(aMessage,_mChatLoginService.AccountId);
         }
 
         private void OnUserConnectStateChange(IChannelUserData aChannelUserData)

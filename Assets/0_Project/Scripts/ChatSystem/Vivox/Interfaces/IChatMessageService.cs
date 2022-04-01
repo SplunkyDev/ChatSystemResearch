@@ -5,7 +5,7 @@ using VivoxUnity;
 
 namespace BSS.Octane.Chat.Vivox
 {
-   public interface IChatServiceMessages
+   public interface IChatMessageService
    {
       void SetChannel(IChannelSession aChannelSession);
 

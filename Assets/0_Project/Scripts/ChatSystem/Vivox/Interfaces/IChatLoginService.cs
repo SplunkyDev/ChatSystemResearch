@@ -2,7 +2,7 @@ using VivoxUnity;
 
 namespace BSS.Octane.Chat.Vivox
 {
-   public interface IChatServiceLogin
+   public interface IChatLoginService
    {
       public Client Client { get; }
       public AccountId AccountId { get; }

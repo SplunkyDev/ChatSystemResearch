@@ -6,7 +6,7 @@ using VivoxUnity;
 
 namespace BSS.Octane.Chat.Vivox
 {
-    public class ChatMessageService : IChatServiceMessages, IDisposable
+    public class ChatMessageService : IChatMessageService, IDisposable
     {
         private IChannelSession m_channelSession;
         private System.Action<IMessage> onMessageReceived;

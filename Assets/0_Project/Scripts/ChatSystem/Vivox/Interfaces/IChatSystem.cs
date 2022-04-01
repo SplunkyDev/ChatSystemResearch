@@ -5,7 +5,7 @@ namespace BSS.Octane.Chat
     public interface IChatSystem
     {
         bool ConnectionComplete { get; }
-        void Inject(IChatServiceEvents aChatServiceEvents, IChatServiceMessages aChatServiceMessages);
+        void Inject(IChatEventsService aChatEventsService, IChatMessageService aChatMessageService);
         void OnLoginComplete(bool aSuccess);
         void OnChannelJoined(bool aSuccess);
         void CreateAndJoinChannel(string aChannelName);

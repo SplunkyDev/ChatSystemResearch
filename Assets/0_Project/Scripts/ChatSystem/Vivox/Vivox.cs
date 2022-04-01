@@ -10,20 +10,20 @@ using UnityEngine;
 
 namespace BSS.Octane.Chat.Vivox
 {
-    public class VivoxLogin : IChatServiceLogin , IDisposable
+    public class Vivox : IChatLoginService , IDisposable
     {
         private ILoginSession m_LoginSession;
         private AccountId m_accountId;
         private Dictionary<string,string> m_dictChannel =  new Dictionary<string,string>();
-        private IChatServiceEvents m_chatServiceEvents;
-        private IChatServiceMessages m_chatServiceMessages;
+        private IChatEventsService _mChatEventsService;
+        private IChatMessageService _mChatMessageService;
         private IChatSystem m_chatSystem;
         private bool m_bChatEssentialsInitialized = false;
 
         public Client Client { get; private set;  }
         public AccountId AccountId { get => m_accountId; }
 
-        public VivoxLogin(Action<bool> OnVivoxInitialized, IChatSystem aChatSystem)
+        public Vivox(Action<bool> OnVivoxInitialized, IChatSystem aChatSystem)
         {
             InitializeVivox(OnVivoxInitialized);
             m_chatSystem = aChatSystem;
@@ -35,8 +35,7 @@ namespace BSS.Octane.Chat.Vivox
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             VivoxService.Instance.Initialize();
             Client = VivoxService.Instance.Client;
-            
-            DependencyContainer.instance.RegisterToContainer<IChatServiceLogin>(this);
+            DependencyContainer.instance.RegisterToContainer<IChatLoginService>(this);
             OnVivoxInitialized(VivoxService.Instance.IsAuthenticated);
         }
         
@@ -57,6 +56,8 @@ namespace BSS.Octane.Chat.Vivox
                 catch (Exception e)
                 {
                     // Unbind any login session-related events you might be subscribed to.
+                    m_LoginSession.PropertyChanged -= LoginSessionPropertyChange;
+                    Debug.LogError($"[VivoxLogin][Login] Login error: {e.Message} callstack: {e.StackTrace}");
                     // Handle error
                     return;
                 }
@@ -84,11 +85,6 @@ namespace BSS.Octane.Chat.Vivox
                     case LoginState.LoggedIn:
                         bool connectAudio = true;
                         bool connectText = true;
-
-                        // This puts you into an echo channel where you can hear yourself speaking.
-                        // If you can hear yourself, then everything is working and you are ready to integrate Vivox into your project.
-                        // JoinChannel("TestChannel", ChannelType.Echo, connectAudio, connectText);
-                        // To test with multiple users, try joining a non-positional channel.
                         Debug.Log($"[Vivox][LoginSessionPropertyChange] login state: {loginSession.State}. Join Channel being called ");
                         m_chatSystem.OnLoginComplete(true);
                         break;
@@ -140,23 +136,23 @@ namespace BSS.Octane.Chat.Vivox
                         {
                             m_bChatEssentialsInitialized = true;
                             //Creates intance of IChatEventsService, this instance register to events of the CHannelSession
-                            m_chatServiceEvents = new ChatEventsService(this, channelSession);
+                            _mChatEventsService = new ChatEventsService(this, channelSession);
                             //Creates instance if ChatMessageService, this implements the messaging API
-                            m_chatServiceMessages = new ChatMessageService(channelSession);
+                            _mChatMessageService = new ChatMessageService(channelSession);
                             //Registering the instances to the dependency container so that other services gcan get their reference if required
-                            DependencyContainer.instance.RegisterToContainer<IChatServiceEvents>(m_chatServiceEvents);
-                            DependencyContainer.instance.RegisterToContainer<IChatServiceMessages>(
-                                m_chatServiceMessages);
+                            DependencyContainer.instance.RegisterToContainer<IChatEventsService>(_mChatEventsService);
+                            DependencyContainer.instance.RegisterToContainer<IChatMessageService>(
+                                _mChatMessageService);
                            
                         }
                         else
                         {
-                            m_chatServiceEvents.SetChannel(channelSession);
-                            m_chatServiceMessages.SetChannel(channelSession);
+                            _mChatEventsService.SetChannel(channelSession);
+                            _mChatMessageService.SetChannel(channelSession);
                         }
                         
                         //New channel, IChatSystem can register to the new channel as well. 
-                        m_chatSystem.Inject(m_chatServiceEvents, m_chatServiceMessages);
+                        m_chatSystem.Inject(_mChatEventsService, _mChatMessageService);
                     }
                     catch(Exception e)
                     {
@@ -290,8 +286,8 @@ namespace BSS.Octane.Chat.Vivox
         public void Dispose()
         {
             m_LoginSession = null;
-            m_chatServiceEvents = null;
-            m_chatServiceMessages = null;
+            _mChatEventsService = null;
+            _mChatMessageService = null;
             m_dictChannel.Clear();
         }
     }

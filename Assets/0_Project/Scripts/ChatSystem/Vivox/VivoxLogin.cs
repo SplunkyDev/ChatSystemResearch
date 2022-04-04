@@ -14,7 +14,6 @@ namespace Chat.Vivox
     {
         private ILoginSession m_LoginSession;
         private AccountId m_accountId;
-        private Account m_account;
         private Dictionary<string,string> m_dictChannel =  new Dictionary<string,string>();
         private IChatEventsService _mChatEventsService;
         private IChatMessageService _mChatMessageService;
@@ -62,9 +61,8 @@ namespace Chat.Vivox
         public void Login(string aDisplayName)
         {
             // original code
-            m_account = new Account(aDisplayName);
-            //m_accountId = new AccountId("13469-chat_-95312-test", aDisplayName, "mtu1xp.vivox.com");
-            m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_account);
+            m_accountId = new AccountId("13469-chat_-95312-test",aDisplayName,"mtu1xp.vivox.com");
+            m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_accountId);
             string tokenKey =
                 m_LoginSession.GetLoginToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz", TimeSpan.FromSeconds(90));
             // fix

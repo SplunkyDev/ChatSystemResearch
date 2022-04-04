@@ -50,6 +50,7 @@ namespace Chat.Vivox
         {
             m_rectUsername.gameObject.SetActive(false);
             m_textLoginStatus.text = "Logging into Vivox as "+aUserName;
+            Debug.Log($"<color=green> Username: {aUserName}</color>");
             _mChatLoginService.Login(aUserName);
         }
         

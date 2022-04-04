@@ -20,7 +20,12 @@ namespace Chat.Vivox
         private IChatSystem m_chatSystem;
         private bool m_bChatEssentialsInitialized = false;
         
-        public Client VivoxClient { get; private set;  }
+        // original code
+        //public Client VivoxClient { get; private set;  } 
+        // fix
+        public Client VivoxClient { get; private set;  } = new Client();
+        //
+
         public AccountId AccountId { get => m_accountId; }
 
         public VivoxLogin(Action<bool> OnVivoxInitialized, IChatSystem aChatSystem)
@@ -33,22 +38,45 @@ namespace Chat.Vivox
         {
             await UnityServices.InitializeAsync();
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            VivoxService.Instance.Initialize();
-            VivoxClient = VivoxService.Instance.Client;
+
+            // orginal code
+            //VivoxService.Instance.Initialize();
+            //VivoxClient = VivoxService.Instance.Client;
+            // fix
+            VivoxClient.Uninitialize();
+            VivoxClient.Initialize();
+            //
+
             DependencyContainer.instance.RegisterToContainer<IChatLoginService>(this);
-            OnVivoxInitialized(VivoxService.Instance.IsAuthenticated);
+
+            // original code
+            //OnVivoxInitialized(VivoxService.Instance.IsAuthenticated);
+            // fix
+            OnVivoxInitialized(VivoxClient.Initialized);
+            //
         }
         
        
         
         public void Login(string aDisplayName)
         {
-            m_accountId = new Account(aDisplayName);
+            // original code
+            //m_accountId = new Account(aDisplayName);
+            //m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_accountId);   
+            // fix
+            // AccountId("issuer", "username", "domain");
+            // all values are from Unity Game Services or from Vivox Developer portal , I used your Credentials
+            m_accountId = new AccountId("13469-chat_-95312-test", aDisplayName, "mtu1xp.vivox.com");
+            m_LoginSession = VivoxClient.GetLoginSession(m_accountId);
+            //
 
-            m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_accountId);
             m_LoginSession.PropertyChanged += LoginSessionPropertyChange;                    
 
-            m_LoginSession.BeginLogin(m_LoginSession.GetLoginToken(), SubscriptionMode.Accept, null, null, null, ar =>
+            // original code 
+            //m_LoginSession.BeginLogin(m_LoginSession.GetLoginToken(), SubscriptionMode.Accept, null, null, null, ar =>
+            // fix
+            m_LoginSession.BeginLogin(new Uri("https://unity.vivox.com/appconfig/13469-chat_-95312-test"),m_LoginSession.GetLoginToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz", TimeSpan.FromSeconds(90)), SubscriptionMode.Accept, null, null, null, ar =>
+            //
             {
                 try
                 {   

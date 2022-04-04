@@ -5,6 +5,7 @@ using Unity.Services.Core;
 using Unity.Services.Vivox;
 using VivoxUnity;
 using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 using VivoxAccessToken;
 
@@ -274,13 +275,19 @@ namespace Chat.Vivox
 
                     case ConnectionState.Connected:
                         Debug.Log("Channel connected in " + channelSession.Key.Name);
-                        m_CurrentChannelId = channelSession.Key;
-                        m_dictChannel.Add( channelSession.Key.Name, m_CurrentChannelId);
+                        if(!m_dictChannel.ContainsKey(channelSession.Key.Name))
+                        {
+                            m_CurrentChannelId = channelSession.Key;
+                            m_dictChannel.Add(channelSession.Key.Name, m_CurrentChannelId);
+                        }
                         break;
 
                     case ConnectionState.Disconnecting:
                         Debug.Log("Channel disconnecting in " + channelSession.Key.Name);
-                        m_dictChannel.Remove( channelSession.Key.Name);
+                        if (m_dictChannel.ContainsKey(channelSession.Key.Name))
+                        {
+                            m_dictChannel.Remove(channelSession.Key.Name);
+                        }
                         break;
 
                     case ConnectionState.Disconnected:

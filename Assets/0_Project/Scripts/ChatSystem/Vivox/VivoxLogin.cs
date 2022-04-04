@@ -14,12 +14,13 @@ namespace Chat.Vivox
     {
         private ILoginSession m_LoginSession;
         private AccountId m_accountId;
-        private Dictionary<string,string> m_dictChannel =  new Dictionary<string,string>();
+        private Dictionary<string,ChannelId> m_dictChannel =  new Dictionary<string,ChannelId>();
         private IChatEventsService _mChatEventsService;
         private IChatMessageService _mChatMessageService;
         private IChatSystem m_chatSystem;
         private bool m_bChatEssentialsInitialized = false;
-        
+
+        private ChannelId m_CurrentChannelId = null;
         // original code
         public Client VivoxClient { get; private set;  } 
         // fix
@@ -129,7 +130,12 @@ namespace Chat.Vivox
                 
             }
         }
-
+        
+        public  void LeaveChannel()
+        {
+            m_LoginSession.DeleteChannelSession(m_CurrentChannelId);
+        }
+        
         public void Logout()
         {
             
@@ -164,7 +170,7 @@ namespace Chat.Vivox
                 //     "sip:"+m_accountId.DisplayName+".@mtu1xp.vivox.com", "sip:confctl-g-"+aChannelName+".@mtu1xp.vivox.com"
                 // );
                 
-                m_dictChannel.Add(aChannelName,tokenKey);
+               
                 Debug.Log($"[Vivox][JoinChannel]Begin connection: Token Key: {tokenKey} and Channel Name: {aChannelName} ");
                 channelSession.BeginConnect(aConnectAudio, aConnectText, aTransmissionSwitch, tokenKey, ar => 
                 {
@@ -268,10 +274,13 @@ namespace Chat.Vivox
 
                     case ConnectionState.Connected:
                         Debug.Log("Channel connected in " + channelSession.Key.Name);
+                        m_CurrentChannelId = channelSession.Key;
+                        m_dictChannel.Add( channelSession.Key.Name, m_CurrentChannelId);
                         break;
 
                     case ConnectionState.Disconnecting:
                         Debug.Log("Channel disconnecting in " + channelSession.Key.Name);
+                        m_dictChannel.Remove( channelSession.Key.Name);
                         break;
 
                     case ConnectionState.Disconnected:
@@ -283,20 +292,9 @@ namespace Chat.Vivox
 
         public void LeaveChannel(ChannelId aChannelIdToLeave)
         {
-            
+            m_LoginSession.DeleteChannelSession(aChannelIdToLeave);
         }
 
-        public string GetTokenId(string aChannelName)
-        {
-            if (!m_dictChannel.ContainsKey(aChannelName))
-            {
-                Debug.LogError($"[VivoxLogin] {aChannelName} Channel not present");
-                return String.Empty;
-            }
-            return m_dictChannel[aChannelName];
-        }
-        
-       
         
         public void Dispose()
         {

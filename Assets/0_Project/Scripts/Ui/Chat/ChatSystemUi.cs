@@ -12,7 +12,7 @@ public class ChatSystemUi : MonoBehaviour
     
     
      #region Private fields
-     private IChatMessageService _mChatMessageService;
+     private IChatMessageService m_ChatMessageService;
      private string m_strLogMessage, m_strLogCallStack;
      private List<string> m_lstLogMessages = new List<string>();
      #endregion
@@ -37,17 +37,17 @@ public class ChatSystemUi : MonoBehaviour
     private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        _mChatMessageService = DependencyContainer.instance.GetFromContainer<IChatMessageService>();
+        m_ChatMessageService = DependencyContainer.instance.GetFromContainer<IChatMessageService>();
     
-        _mChatMessageService.RegisterOnChatMessageReceived(OnChatMessageReceived);
+        m_ChatMessageService.RegisterOnChatMessageReceived(OnChatMessageReceived);
     }
     
 
     private void OnDestroy()
     {
-        if(_mChatMessageService != null)
+        if(m_ChatMessageService != null)
         {
-            _mChatMessageService.DeregisterOnChatMessageReceived(OnChatMessageReceived);
+            m_ChatMessageService.DeregisterOnChatMessageReceived(OnChatMessageReceived);
         }
     }
 

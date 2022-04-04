@@ -12,6 +12,7 @@ namespace Chat.Vivox
       void CreateAndJoinChannel(string aChannelName, ChannelType aChannelType, bool aConnectAudio, bool aConnectText,
          bool aTransmissionSwitch = true, Channel3DProperties aProperties = null);
       void LeaveChannel(ChannelId aChannelIdToLeave);
-      string GetTokenId(string aChannelName);
+
+      void LeaveChannel();
    }
 }

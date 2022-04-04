@@ -22,12 +22,12 @@ namespace Chat.Vivox
 
         #region Private fields
 
-        private IChatLoginService _mChatLoginService;
-        private IChatMessageService _mChatMessageService;
-        private IChatEventsService _mChatEventsService;
+        private IChatLoginService m_ChatLoginService;
+        private IChatMessageService m_ChatMessageService;
+        private IChatEventsService m_ChatEventsService;
 
         private bool m_bLoginSuccess = false, m_bCreatedChannel = false;
-
+        private string m_strUserName = string.Empty;
         #endregion
         
         #region Public fields
@@ -38,22 +38,28 @@ namespace Chat.Vivox
         
         public void Inject(IChatEventsService aChatEventsService, IChatMessageService aChatMessageService)
         {
-            _mChatEventsService = aChatEventsService;
-            _mChatEventsService.RegisterOnUserConnectionChange(OnUserConnectStateChange);
+            m_ChatEventsService = aChatEventsService;
+            m_ChatEventsService.RegisterOnUserConnectionChange(OnUserConnectStateChange);
             
-            _mChatMessageService = aChatMessageService;
+            m_ChatMessageService = aChatMessageService;
             
             ConnectionComplete = true;
         }
 
         public void Login(string aUserName)
         {
+            m_strUserName = aUserName;
             m_rectUsername.gameObject.SetActive(false);
-            m_textLoginStatus.text = "Logging into Vivox as "+aUserName;
-            Debug.Log($"<color=green> Username: {aUserName}</color>");
-            _mChatLoginService.Login(aUserName);
+            m_textLoginStatus.text = "Logging into Vivox as "+m_strUserName;
+            Debug.Log($"<color=green> Username: {m_strUserName}</color>");
+            m_ChatLoginService.Login(m_strUserName);
         }
-        
+
+        public void Logout()
+        {
+           m_ChatLoginService.Logout();
+        }
+
         public void OnLoginComplete(bool aSuccess)
         {
             m_bLoginSuccess = aSuccess;
@@ -77,7 +83,6 @@ namespace Chat.Vivox
             if (aSuccess)
             {
                 Debug.Log("[ChatSystem] Vivox channel joined");
-                m_inputFieldNetworkId.text = _mChatLoginService.GetTokenId(m_inputFieldChannelName.text);
                 
                 if(!m_bCreatedChannel)
                 {
@@ -112,9 +117,9 @@ namespace Chat.Vivox
 
         private void OnDestroy()
         {
-            if (_mChatEventsService != null)
+            if (m_ChatEventsService != null)
             {
-                _mChatEventsService.DeregisterOnUserConnectionChange(OnUserConnectStateChange);
+                m_ChatEventsService.DeregisterOnUserConnectionChange(OnUserConnectStateChange);
             }
         }
 
@@ -129,7 +134,7 @@ namespace Chat.Vivox
             m_rectVivoxLogin.gameObject.SetActive(true);
             DependencyContainer.instance.RegisterToContainer<IChatSystem>(this);
             m_textLoginStatus.text = "Initializing Vivox";
-            _mChatLoginService = new VivoxLogin((b =>
+            m_ChatLoginService = new VivoxLogin((b =>
             {
                 if (b)
                 {
@@ -155,23 +160,39 @@ namespace Chat.Vivox
                 Debug.LogWarning("[ChatSystem] Login isn't complete yet");
                 return;
             }
-
-            m_bCreatedChannel = true;
-            _mChatLoginService.CreateAndJoinChannel(aChannelName, ChannelType.NonPositional, true, true, true, null);
+            
+            m_ChatLoginService.CreateAndJoinChannel(aChannelName, ChannelType.NonPositional, true, true, true, null);
         }
         
         public void SendChatMessageToAll(string aMessage)
         {
-            _mChatMessageService.SendChatMessageToAll(aMessage,_mChatLoginService.AccountId);
+            m_ChatMessageService.SendChatMessageToAll(aMessage,m_ChatLoginService.AccountId);
         }
 
+        public void LeaveChannel()
+        {
+          m_ChatLoginService.LeaveChannel();
+        }
+        
         private void OnUserConnectStateChange(IChannelUserData aChannelUserData)
         {
-            Debug.Log("<color=green>[ChatSystem] Vivox new user entered </color>");
-            if(m_bCreatedChannel)
+            if(aChannelUserData.ParticipantJoined)
             {
-                m_rectJoinNetworkUi.gameObject.SetActive(false);
-                m_rectChatUi.gameObject.SetActive(true);
+                Debug.Log($"<color=green>[ChatSystem] Vivox user entered: {aChannelUserData.Username} </color>");
+                if (aChannelUserData.Username == m_strUserName)
+                {
+                    m_rectJoinNetworkUi.gameObject.SetActive(false);
+                    m_rectChatUi.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                Debug.Log($"<color=green>[ChatSystem] Vivox user exited: {aChannelUserData.Username} </color>");
+                if (aChannelUserData.Username == m_strUserName)
+                {
+                    m_rectJoinNetworkUi.gameObject.SetActive(true);
+                    m_rectChatUi.gameObject.SetActive(false);
+                }
             }
         }
         

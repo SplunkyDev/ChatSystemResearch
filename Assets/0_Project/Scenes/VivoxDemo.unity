@@ -310,6 +310,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1059664565 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8520761851694613846, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
+  m_PrefabInstance: {fileID: 2523473287816350784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1208527496
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +471,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 669713697705904061, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8520761851200764032, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -554,10 +563,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Vivox
       objectReference: {fileID: 0}
-    - target: {fileID: 8520761852305687437, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
-      propertyPath: m_FontData.m_HorizontalOverflow
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a622252bfc4a9d4489373d9987b925f8, type: 3}
 --- !u!114 &2523473287816350785 stripped
@@ -584,8 +589,12 @@ PrefabInstance:
       objectReference: {fileID: 1487790172}
     - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
       propertyPath: m_strUserName
-      value: Link1992
+      value: Link
       objectReference: {fileID: 0}
+    - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
+      propertyPath: m_rectUsername
+      value: 
+      objectReference: {fileID: 1059664565}
     - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
       propertyPath: m_rectVivoxLogin
       value: 

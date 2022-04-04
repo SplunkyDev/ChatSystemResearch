@@ -14,6 +14,7 @@ namespace Chat.Vivox
     {
         private ILoginSession m_LoginSession;
         private AccountId m_accountId;
+        private Account m_account;
         private Dictionary<string,string> m_dictChannel =  new Dictionary<string,string>();
         private IChatEventsService _mChatEventsService;
         private IChatMessageService _mChatMessageService;
@@ -21,9 +22,9 @@ namespace Chat.Vivox
         private bool m_bChatEssentialsInitialized = false;
         
         // original code
-        //public Client VivoxClient { get; private set;  } 
+        public Client VivoxClient { get; private set;  } 
         // fix
-        public Client VivoxClient { get; private set;  } = new Client();
+        // public Client VivoxClient { get; private set;  } = new Client();
         //
 
         public AccountId AccountId { get => m_accountId; }
@@ -40,19 +41,19 @@ namespace Chat.Vivox
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
             // orginal code
-            //VivoxService.Instance.Initialize();
-            //VivoxClient = VivoxService.Instance.Client;
+            VivoxService.Instance.Initialize();
+            VivoxClient = VivoxService.Instance.Client;
             // fix
-            VivoxClient.Uninitialize();
-            VivoxClient.Initialize();
+            // VivoxClient.Uninitialize();
+            // VivoxClient.Initialize();
             //
 
             DependencyContainer.instance.RegisterToContainer<IChatLoginService>(this);
 
             // original code
-            //OnVivoxInitialized(VivoxService.Instance.IsAuthenticated);
+            OnVivoxInitialized(VivoxService.Instance.IsAuthenticated);
             // fix
-            OnVivoxInitialized(VivoxClient.Initialized);
+            // OnVivoxInitialized(VivoxClient.Initialized);
             //
         }
         
@@ -61,21 +62,24 @@ namespace Chat.Vivox
         public void Login(string aDisplayName)
         {
             // original code
-            //m_accountId = new Account(aDisplayName);
-            //m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_accountId);   
+            m_account = new Account(aDisplayName);
+            //m_accountId = new AccountId("13469-chat_-95312-test", aDisplayName, "mtu1xp.vivox.com");
+            m_LoginSession = VivoxService.Instance.Client.GetLoginSession(m_account);
+            string tokenKey =
+                m_LoginSession.GetLoginToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz", TimeSpan.FromSeconds(90));
             // fix
             // AccountId("issuer", "username", "domain");
             // all values are from Unity Game Services or from Vivox Developer portal , I used your Credentials
-            m_accountId = new AccountId("13469-chat_-95312-test", aDisplayName, "mtu1xp.vivox.com");
-            m_LoginSession = VivoxClient.GetLoginSession(m_accountId);
+            // m_accountId = new AccountId("13469-chat_-95312-test", aDisplayName, "mtu1xp.vivox.com");
+            // m_LoginSession = VivoxClient.GetLoginSession(m_accountId);
             //
 
             m_LoginSession.PropertyChanged += LoginSessionPropertyChange;                    
 
             // original code 
-            //m_LoginSession.BeginLogin(m_LoginSession.GetLoginToken(), SubscriptionMode.Accept, null, null, null, ar =>
+            m_LoginSession.BeginLogin(tokenKey, SubscriptionMode.Accept, null, null, null, ar =>
             // fix
-            m_LoginSession.BeginLogin(new Uri("https://unity.vivox.com/appconfig/13469-chat_-95312-test"),m_LoginSession.GetLoginToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz", TimeSpan.FromSeconds(90)), SubscriptionMode.Accept, null, null, null, ar =>
+            // m_LoginSession.BeginLogin(new Uri("https://unity.vivox.com/appconfig/13469-chat_-95312-test"),m_LoginSession.GetLoginToken("RUiLtKTgzZw5WPOF2IVrn2Bg6gK6lMnz", TimeSpan.FromSeconds(90)), SubscriptionMode.Accept, null, null, null, ar =>
             //
             {
                 try

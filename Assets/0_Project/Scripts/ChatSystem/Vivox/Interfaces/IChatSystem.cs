@@ -6,6 +6,7 @@ namespace Chat
     {
         bool ConnectionComplete { get; }
         void Inject(IChatEventsService aChatEventsService, IChatMessageService aChatMessageService);
+        void Login(string aUser);
         void OnLoginComplete(bool aSuccess);
         void OnChannelJoined(bool aSuccess);
         void CreateAndJoinChannel(string aChannelName);

@@ -17,8 +17,7 @@ namespace Chat.Vivox
         [SerializeField] private InputField m_inputFieldNetworkId,m_inputFieldChannelName;
         [SerializeField] private Text m_textLoginStatus;
         [SerializeField] private RectTransform m_rectJoinNetworkUi, m_rectChatUi;
-        [SerializeField] private RectTransform m_rectVivoxLogin;
-        [SerializeField] private string m_strUserName;
+        [SerializeField] private RectTransform m_rectVivoxLogin, m_rectUsername;
         #endregion
 
         #region Private fields
@@ -47,6 +46,13 @@ namespace Chat.Vivox
             ConnectionComplete = true;
         }
 
+        public void Login(string aUserName)
+        {
+            m_rectUsername.gameObject.SetActive(false);
+            m_textLoginStatus.text = "Logging into Vivox as "+aUserName;
+            _mChatLoginService.Login(aUserName);
+        }
+        
         public void OnLoginComplete(bool aSuccess)
         {
             m_bLoginSuccess = aSuccess;
@@ -128,8 +134,7 @@ namespace Chat.Vivox
                 {
                     m_textLoginStatus.text = "Vivox initialized";
                     Debug.Log("[ChatSystem] Vivox initialization success");
-                    m_textLoginStatus.text = "Logging into Vivox as "+m_strUserName;
-                    _mChatLoginService.Login(m_strUserName);
+                    m_rectUsername.gameObject.SetActive(true);
                 }
                 else
                 {
@@ -161,7 +166,12 @@ namespace Chat.Vivox
 
         private void OnUserConnectStateChange(IChannelUserData aChannelUserData)
         {
-            Debug.Log("[ChatSystem] Vivox new user entered channel");
+            Debug.Log("<color=green>[ChatSystem] Vivox new user entered </color>");
+            if(m_bCreatedChannel)
+            {
+                m_rectJoinNetworkUi.gameObject.SetActive(false);
+                m_rectChatUi.gameObject.SetActive(true);
+            }
         }
         
        

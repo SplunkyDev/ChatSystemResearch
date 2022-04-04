@@ -9,21 +9,30 @@ namespace Chat.Vivox
 {
     public class ChatEventsService : IChatEventsService, IDisposable
     {
-        private IChatLoginService _mChatLoginService;
+        private IChatLoginService m_ChatLoginService;
         private IChannelSession m_channelSession;
 
         private System.Action<IChannelPropertyData> m_channelDataAction;
         private System.Action<IChannelUserData> m_channelUserAction;
 
+        private List<string> m_lstChannelId = new List<string>();
         public ChatEventsService(IChatLoginService aChatLoginService, IChannelSession aChannelSession)
         {
-            _mChatLoginService = aChatLoginService;
+            m_ChatLoginService = aChatLoginService;
             SetChannel(aChannelSession);
         }
 
         public void SetChannel(IChannelSession aChannelSession)
         {
+            if( m_channelSession != null && m_channelSession == aChannelSession)
+                return;
+            
             m_channelSession = aChannelSession;
+           if(!m_lstChannelId.Contains(m_channelSession.Channel.Name))
+           {
+               BindChannelSessionHandlers(true, m_channelSession);
+           }
+            
         }
 
         public void RegisterOnUserConnectionChange(Action<IChannelUserData> action)
@@ -59,6 +68,11 @@ namespace Chat.Vivox
             string strUsername = participant?.Account.Name;
             ChannelId channelId = participant?.ParentChannelSession.Key;
             IChannelSession channelSession = participant?.ParentChannelSession;
+            
+            // Triggering ChannelUser event
+            IChannelUserData channelUserData = new ChannelUserData(strUsername,channelId,channelSession, true);
+            m_channelUserAction?.Invoke(channelUserData);
+            
             //Do what you want with the information
             Debug.Log(
                 $"[ChatSystem][OnParticipantAdded] Account name: {strUsername} Channel Id: {channelId} Channel Session: {channelSession} ");
@@ -75,12 +89,16 @@ namespace Chat.Vivox
             ChannelId channelId = participant?.ParentChannelSession.Key;
             IChannelSession channelSession = participant?.ParentChannelSession;
             //Do what you want with the information
-
+            
+            // Triggering ChannelUser event
+            IChannelUserData channelUserData = new ChannelUserData(strUsername,channelId,channelSession, false);
+            m_channelUserAction?.Invoke(channelUserData);
+            
             if (participant.IsSelf)
             {
                 BindChannelSessionHandlers(false, channelSession); //Unsubscribe from events here
                 channelId = null;
-                ILoginSession loginSession = _mChatLoginService.VivoxClient.GetLoginSession(_mChatLoginService.AccountId);
+                ILoginSession loginSession = m_ChatLoginService.VivoxClient.GetLoginSession(m_ChatLoginService.AccountId);
                 loginSession.DeleteChannelSession(channelSession.Channel);
             }
         }
@@ -104,6 +122,10 @@ namespace Chat.Vivox
                 default:
                     break;
             }
+            
+            // Triggering ChannelUser event
+            IChannelPropertyData channelPropertyData = new ChannelPropertyData(username,channel,property);
+            m_channelDataAction?.Invoke(channelPropertyData);
         }
 
         private void ValidateArgs(object[] objs)
@@ -122,10 +144,10 @@ namespace Chat.Vivox
             if (doBind)
             {
                 // Participants
-                SetChannel(channelSession);
                 channelSession.Participants.AfterKeyAdded += OnParticipantAdded;
                 channelSession.Participants.BeforeKeyRemoved += OnParticipantRemoved;
                 channelSession.Participants.AfterValueUpdated += OnParticipantValueUpdated;
+                m_lstChannelId.Add(channelSession.Channel.Name);
             }
 
             //Unsubscribing to the events
@@ -133,9 +155,10 @@ namespace Chat.Vivox
             {
                 // Participants
                 SetChannel(channelSession);
-                channelSession.Participants.AfterKeyAdded += OnParticipantAdded;
-                channelSession.Participants.BeforeKeyRemoved += OnParticipantRemoved;
-                channelSession.Participants.AfterValueUpdated += OnParticipantValueUpdated;
+                channelSession.Participants.AfterKeyAdded -= OnParticipantAdded;
+                channelSession.Participants.BeforeKeyRemoved -= OnParticipantRemoved;
+                channelSession.Participants.AfterValueUpdated -= OnParticipantValueUpdated;
+                m_lstChannelId.Remove(channelSession.Channel.Name);
             }
         }
 

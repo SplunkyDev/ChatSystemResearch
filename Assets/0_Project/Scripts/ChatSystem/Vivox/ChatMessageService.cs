@@ -59,7 +59,7 @@ namespace Chat.Vivox
         private void OnChatMessageReceived(object sender, QueueItemAddedEventArgs<IChannelTextMessage> queueItemAddedEventArgs)
         {
             string channelName = queueItemAddedEventArgs.Value.ChannelSession.Channel.Name;
-            string senderName = queueItemAddedEventArgs.Value.Sender.Name;
+            string senderName = queueItemAddedEventArgs.Value.Sender.DisplayName;
             string message = queueItemAddedEventArgs.Value.Message;
             ChatMessage chatMessage = new ChatMessage(channelName,senderName,message);
 

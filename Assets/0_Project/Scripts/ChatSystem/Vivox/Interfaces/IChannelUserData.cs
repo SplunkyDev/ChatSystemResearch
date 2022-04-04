@@ -1,8 +1,15 @@
 
+using VivoxUnity;
+
 namespace Chat
 {
     public interface IChannelUserData
     {
-        //TODO: The data retrieved from events 
+        public string Username { get; }
+        public ChannelId ChannelId { get; }
+        public IChannelSession ChannelSession { get; }
+        public bool ParticipantJoined { get; }
+
+        
     }
 }

@@ -1,8 +1,13 @@
+using VivoxUnity;
 
 namespace Chat
 {
     public interface IChannelPropertyData
     {
-        //TODO: The data retrieved from events 
+        public string Username { get; }
+        public ChannelId ChannelId { get; }
+        public string Property { get; }
+
+
     }
 }

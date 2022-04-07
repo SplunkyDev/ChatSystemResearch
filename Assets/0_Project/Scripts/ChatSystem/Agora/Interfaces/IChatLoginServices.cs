@@ -6,7 +6,7 @@ namespace Chat.Agora
     {
         void Login(string aDisplayName);
         void Logout();
-        void CreateAndJoinChannel(string token, string channelId, string info, uint uid, ChannelMediaOptions options);
+        void CreateAndJoinChannel(string aTokenKey, string aChannelId, string aUsername, ChannelMediaOptions options);
         void LeaveChannel();
     }
 }

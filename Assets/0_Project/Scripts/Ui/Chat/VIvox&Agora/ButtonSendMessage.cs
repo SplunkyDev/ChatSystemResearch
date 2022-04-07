@@ -2,10 +2,15 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+#if AGORA_DEV
+using Chat.Agora;
+#elif VIVOX_DEV
+using Chat.Vivox;
+#endif
 
 namespace Chat
 {
-    public class ButtonSendVivoxMessage : UiButton
+    public class ButtonSendMessage : UiButton
     {
         #region Serialize fields
 

@@ -2,32 +2,37 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonCreateJoinVivoxChannel : UiButton
+#if AGORA_DEV
+using Chat.Agora;
+#elif VIVOX_DEV
+using Chat.Vivox;
+#endif
+
+public class ButtonLoginUser : UiButton
 {
     #region Serialize fields
-    [SerializeField] private InputField m_inputChannelName;
+    [SerializeField] private InputField m_inputUserName;
     #endregion
 
     #region Private fields
 
-    private Chat.IChatSystem m_chatSystem;
+    private IChatSystem m_chatSystem;
 
     #endregion
 
     private void Start()
     {
-        m_chatSystem = DependencyContainer.instance.GetFromContainer<Chat.IChatSystem>();
+        m_chatSystem = DependencyContainer.instance.GetFromContainer<IChatSystem>();
     }
 
     public override void OnPointerUp(PointerEventData eventData)
     {
         if (m_chatSystem != null)
         {
-            m_chatSystem.CreateAndJoinChannel( m_inputChannelName.text);
+            m_chatSystem.Login( m_inputUserName.text);
         }
 
         base.OnPointerUp(eventData);
         Debug.Log($"[UiButton] Button Clicked: {GetType()}");
     }
 }
-

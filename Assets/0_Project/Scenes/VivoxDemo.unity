@@ -580,6 +580,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
+      propertyPath: m_strAppId
+      value: 3cc1dfa9d1a041e4bda4008761d986f1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
       propertyPath: m_rectLogin
       value: 
       objectReference: {fileID: 6141500694780344186}
@@ -587,6 +591,10 @@ PrefabInstance:
       propertyPath: m_rectChatUi
       value: 
       objectReference: {fileID: 6141500693953357736}
+    - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
+      propertyPath: m_strTokenKey
+      value: 0063cc1dfa9d1a041e4bda4008761d986f1IADlmJfWS56ngTT7QS5J5YWe3qJkBtukAL0ugm8yPYJqDJ0BFtgAAAAAEAB5z62RQBRQYgEAAQBAFFBi
+      objectReference: {fileID: 0}
     - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
       propertyPath: m_rectUsername
       value: 

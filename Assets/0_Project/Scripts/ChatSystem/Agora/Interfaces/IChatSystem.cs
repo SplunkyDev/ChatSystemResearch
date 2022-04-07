@@ -3,7 +3,7 @@ namespace Chat.Agora
     public interface IChatSystem
     {
         bool ConnectionComplete { get; }
-        void Inject(IChatConnectionEvents aConnectionEvents, IChatMessageServices aMessageServices);
+        void Inject(IChatConnectionEvents aConnectionEvents, IChatMessageService aMessageService);
         void Login(string aUser);
         void Logout();
         void OnLoginComplete(bool aSuccess);

@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Chat;
-using Chat.Vivox;
 using UnityEngine;
+using Chat;
+
+#if AGORA_DEV
+using Chat.Agora;
+#elif VIVOX_DEV
+using Chat.Vivox;
+#endif
 
 public class ChatSystemUi : MonoBehaviour
 {
@@ -12,7 +17,7 @@ public class ChatSystemUi : MonoBehaviour
     
     
      #region Private fields
-     private IChatMessageService m_ChatMessageService;
+     private IChatMessageService _mChatMessageService;
      private string m_strLogMessage, m_strLogCallStack;
      private List<string> m_lstLogMessages = new List<string>();
      #endregion
@@ -37,17 +42,17 @@ public class ChatSystemUi : MonoBehaviour
     private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        m_ChatMessageService = DependencyContainer.instance.GetFromContainer<IChatMessageService>();
+        _mChatMessageService = DependencyContainer.instance.GetFromContainer<IChatMessageService>();
     
-        m_ChatMessageService.RegisterOnChatMessageReceived(OnChatMessageReceived);
+        _mChatMessageService.RegisterOnChatMessageReceived(OnChatMessageReceived);
     }
     
 
     private void OnDestroy()
     {
-        if(m_ChatMessageService != null)
+        if(_mChatMessageService != null)
         {
-            m_ChatMessageService.DeregisterOnChatMessageReceived(OnChatMessageReceived);
+            _mChatMessageService.DeregisterOnChatMessageReceived(OnChatMessageReceived);
         }
     }
 

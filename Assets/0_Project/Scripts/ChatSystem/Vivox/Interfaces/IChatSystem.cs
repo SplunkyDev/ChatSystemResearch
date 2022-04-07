@@ -1,6 +1,4 @@
-using Chat.Vivox;
-
-namespace Chat
+namespace Chat.Vivox
 {
     public interface IChatSystem
     {

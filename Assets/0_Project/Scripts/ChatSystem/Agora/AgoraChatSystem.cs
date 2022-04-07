@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using agora_gaming_rtc;
 using Chat.Agora;
 using UnityEngine;
 using UnityEngine.Android;
@@ -9,8 +10,11 @@ namespace Chat.Agora
 {
     public class AgoraChatSystem : MonoBehaviour , IChatSystem
     {
-         #region Serialize fields
-
+        #region Serialize fields
+        //This needs to be handled differently on production
+        [SerializeField] private string m_strAppId;
+        //This needs to be handled differently on production
+        [SerializeField] private string m_strTokenKey;
         [SerializeField] private InputField m_inputFieldUsername,m_inputFieldChannelName;
         [SerializeField] private Text m_textLoginStatus;
         [SerializeField] private RectTransform m_rectJoinNetworkUi, m_rectChatUi;
@@ -21,7 +25,7 @@ namespace Chat.Agora
 
         private IChatLoginServices m_chatLoginServices;
         private IChatConnectionEvents m_connectionEvents;
-        private IChatMessageServices m_messageServices;
+        private IChatMessageService m_messageService;
 
         private bool m_bLoginSuccess = false, m_bCreatedChannel = false;
         private string m_strUserName = string.Empty;
@@ -34,11 +38,11 @@ namespace Chat.Agora
         #endregion
         
         
-        public void Inject(IChatConnectionEvents aConnectionEvents, IChatMessageServices aMessageServices)
+        public void Inject(IChatConnectionEvents aConnectionEvents, IChatMessageService aMessageService)
         {
             m_connectionEvents = aConnectionEvents;
             m_connectionEvents.RegisterOnChannelJoinOrLeft(OnUserConnectStateChange);
-            m_messageServices = aMessageServices;
+            m_messageService = aMessageService;
             ConnectionComplete = true;
             
         }
@@ -48,7 +52,7 @@ namespace Chat.Agora
         {
             m_strUserName = aUserName;
             m_rectUsername.gameObject.SetActive(false);
-            m_textLoginStatus.text = "Logging into Vivox as "+m_strUserName;
+            m_textLoginStatus.text = "Logging into Agora as "+m_strUserName;
             Debug.Log($"<color=green> Username: {m_strUserName}</color>");
             m_chatLoginServices.Login(m_strUserName);
         }
@@ -124,7 +128,7 @@ namespace Chat.Agora
                     Debug.LogError("[ChatSystem] Agora initialization failed");
                 }
             
-            }), this);
+            }),m_strAppId, this);
 
 
         }
@@ -137,13 +141,13 @@ namespace Chat.Agora
                 Debug.LogWarning("[ChatSystem] Login isn't complete yet");
                 return;
             }
-            
-            // m_ChatLoginService.CreateAndJoinChannel(aChannelName, ChannelType.NonPositional, true, true, true, null);
+
+            m_chatLoginServices.CreateAndJoinChannel(m_strTokenKey,aChannelName,m_strUserName,new ChannelMediaOptions(true,false,true,false));
         }
         
         public void SendChatMessageToAll(string aMessage)
         {
-           
+           m_messageService.SendMessageToAll(aMessage);
         }
 
         public void LeaveChannel()

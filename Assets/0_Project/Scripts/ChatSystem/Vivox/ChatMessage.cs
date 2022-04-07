@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chat.Vivox
+namespace Chat
 {
     public class ChatMessage : IMessage
     {

@@ -1,18 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using agora_gaming_rtc;
 
-public class IChannelConnectionStatus : MonoBehaviour
+public interface IChannelConnectionStatus 
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    CONNECTION_STATE_TYPE eConnectionState { get; }
+    CONNECTION_CHANGED_REASON_TYPE eConnectionChangeReason { get; }
 }

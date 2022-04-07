@@ -23,8 +23,8 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     public AgoraLogin(Action<bool> OnVivoxInitialized, string aAppId, IChatSystem aChatSystem)
     {
         m_strAppId = aAppId;
-        InitializeAgora(OnVivoxInitialized);
         m_chatSystem = aChatSystem;
+        InitializeAgora(OnVivoxInitialized);
     }
 
     private async void InitializeAgora(Action<bool> OnVivoxInitialized)
@@ -41,6 +41,7 @@ public class AgoraLogin : IChatLoginServices , IDisposable
          m_connectionEvents = new AgoraConnectionStatus(m_rtcEngine);
          _mMessageService = new AgoraMessageService(m_rtcEngine);
          
+         DependencyContainer.instance.RegisterToContainer<IChatLoginServices>(this);
          DependencyContainer.instance.RegisterToContainer<IChatConnectionEvents>(m_connectionEvents);
          DependencyContainer.instance.RegisterToContainer<IChatMessageService>(_mMessageService);
          
@@ -77,6 +78,8 @@ public class AgoraLogin : IChatLoginServices , IDisposable
         if(m_rtcEngine != null)
         {
             m_rtcEngine.OnLocalUserRegistered -= OnLoginComplete;
+            m_rtcEngine.LeaveChannel();
         }
+        IRtcEngine.Destroy();
     }
 }

@@ -12,7 +12,7 @@ namespace Chat.Agora
 
         //Registering to connection lost callback
         void RegisterOnConnectionStatus(System.Action<IChannelConnectionStatus> aEvent); //ConnectionLost, Connection Interrupted, Connect banned, connection state change
-        void DeregisterConnectionStatus(System.Action<IChannelConnectionStatus> aEvent);    
+        void DeregisterOnConnectionStatus(System.Action<IChannelConnectionStatus> aEvent);    
     }
 }
     

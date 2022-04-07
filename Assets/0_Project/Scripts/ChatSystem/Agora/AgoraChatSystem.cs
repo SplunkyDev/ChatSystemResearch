@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using agora_gaming_rtc;
@@ -41,8 +42,9 @@ namespace Chat.Agora
         public void Inject(IChatConnectionEvents aConnectionEvents, IChatMessageService aMessageService)
         {
             m_connectionEvents = aConnectionEvents;
-            m_connectionEvents.RegisterOnChannelJoinOrLeft(OnUserConnectStateChange);
+            m_connectionEvents?.RegisterOnChannelJoinOrLeft(OnRemoteUserConnectStateChange);
             m_messageService = aMessageService;
+            m_connectionEvents?.RegisterOnConnectionStatus(OnLocalUserStatusChanged);
             ConnectionComplete = true;
             
         }
@@ -68,7 +70,7 @@ namespace Chat.Agora
             if (aSuccess)
             {
                 m_textLoginStatus.text = "Login complete";
-                Debug.Log("[ChatSystem] Vivox login success");
+                Debug.Log("[ChatSystem] Agora login success");
                 m_rectLogin.gameObject.SetActive(false);
                 m_rectJoinNetworkUi.gameObject.SetActive(true);
                 
@@ -101,7 +103,8 @@ namespace Chat.Agora
 
         private void OnDestroy()
         {
-            m_connectionEvents?.DeregisterOnChannelJoinOrLeft(OnUserConnectStateChange);
+            m_connectionEvents?.DeregisterOnChannelJoinOrLeft(OnRemoteUserConnectStateChange);
+            m_connectionEvents?.DeregisterOnConnectionStatus(OnLocalUserStatusChanged);
         }
 
         private void Start()
@@ -146,8 +149,9 @@ namespace Chat.Agora
         }
         
         public void SendChatMessageToAll(string aMessage)
-        {
-           m_messageService.SendMessageToAll(aMessage);
+        { 
+            Debug.LogWarning($"[ChatSystem] Send message: {aMessage}");
+            m_messageService.SendMessageToAll(aMessage);
         }
 
         public void LeaveChannel()
@@ -155,25 +159,47 @@ namespace Chat.Agora
             m_chatLoginServices.LeaveChannel();
         }
         
-        private void OnUserConnectStateChange(IChannelUserStatus aChannelUserStatus)
+        private void OnRemoteUserConnectStateChange(IChannelUserStatus aChannelUserStatus)
         {
             if(aChannelUserStatus.ParticipantJoined)
             {
                 Debug.Log($"<color=green>[ChatSystem] user entered: {aChannelUserStatus.Username} </color>");
-                if (aChannelUserStatus.Username == m_strUserName)
-                {
-                    m_rectJoinNetworkUi.gameObject.SetActive(false);
-                    m_rectChatUi.gameObject.SetActive(true);
-                }
+                // if (aChannelUserStatus.Username == m_strUserName)
+                // {
+                //     m_rectJoinNetworkUi.gameObject.SetActive(false);
+                //     m_rectChatUi.gameObject.SetActive(true);
+                // }
             }
             else
             {
                 Debug.Log($"<color=green>[ChatSystem] user exited: {aChannelUserStatus.Username} </color>");
-                if (aChannelUserStatus.Username == m_strUserName)
-                {
-                    m_rectJoinNetworkUi.gameObject.SetActive(true);
-                    m_rectChatUi.gameObject.SetActive(false);
-                }
+                // if (aChannelUserStatus.Username == m_strUserName)
+                // {
+                //     m_rectJoinNetworkUi.gameObject.SetActive(true);
+                //     m_rectChatUi.gameObject.SetActive(false);
+                // }
+            }
+        }
+
+        private void OnLocalUserStatusChanged(IChannelConnectionStatus aChannelConnectionStatus)
+        {
+            Debug.Log($"[AgoraConnectionStatus] Connection state: {aChannelConnectionStatus.eConnectionState} Reason: {aChannelConnectionStatus.eConnectionChangeReason}");
+            switch (aChannelConnectionStatus.eConnectionState)
+            {
+                case CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED:
+                    break;
+                case CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTING:
+                    m_rectJoinNetworkUi.gameObject.SetActive(false);
+                    m_rectChatUi.gameObject.SetActive(true);
+                    break;
+                case CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED:
+                    break;
+                case CONNECTION_STATE_TYPE.CONNECTION_STATE_RECONNECTING:
+                    break;
+                case CONNECTION_STATE_TYPE.CONNECTION_STATE_FAILED:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         

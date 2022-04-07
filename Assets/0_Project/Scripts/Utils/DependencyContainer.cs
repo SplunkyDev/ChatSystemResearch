@@ -35,7 +35,29 @@ public class DependencyContainer : MonoBehaviour
 
     private void OnDestroy()
     {
-       //TODO: Clean up self here 
+       //TODO: Clean up self here, check if this can be handled better
+       Type[] arrKey = new Type[m_dicContainer.Count];
+       int count = 0;
+       foreach (var item in m_dicContainer)
+       {
+           //Caching the key into an array
+           arrKey[count] = item.Key;
+           count++;
+       }
+
+       count = 0;
+       while (m_dicContainer.Count > 0)
+       {
+           //using the key array to get the dat from dictionary 
+           if(m_dicContainer[arrKey[count]] != null)
+           {
+               Debug.Log($"The current type being disposed {m_dicContainer[arrKey[count]]?.GetType()}");
+               IDisposable disposable = m_dicContainer[arrKey[count]] as IDisposable;
+               disposable?.Dispose();
+           }
+           m_dicContainer.Remove(arrKey[count]);
+           count++;
+       }
     }
     
     private void InitializeDependencies()

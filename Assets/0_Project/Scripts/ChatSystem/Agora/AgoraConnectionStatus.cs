@@ -31,6 +31,8 @@ public class AgoraConnectionStatus : IChatConnectionEvents, IDisposable
         var userInfo = m_rtcEngine.GetUserInfoByUid(uid);
         ChannelUserStatus channelUserStatus = new ChannelUserStatus(userInfo.userAccount,uid,true);
         OnChannelJoinOrLeft?.Invoke(channelUserStatus);
+        
+        Debug.Log($"[AgoraConnectionStatus] Remote player connected user id: {uid} user name: {userInfo.userAccount}");
     }
 
     private void OnRemoteUserLeft(uint uid, USER_OFFLINE_REASON reason)
@@ -38,11 +40,15 @@ public class AgoraConnectionStatus : IChatConnectionEvents, IDisposable
         var userInfo = m_rtcEngine.GetUserInfoByUid(uid);
         ChannelUserStatus channelUserStatus = new ChannelUserStatus(userInfo.userAccount,uid,false);
         OnChannelJoinOrLeft?.Invoke(channelUserStatus);
+        
+        Debug.Log($"[AgoraConnectionStatus] Remote player disconnected user id: {uid} user name: {userInfo.userAccount}");
     }
-
+    
     private void OnConnectionChange(CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
     {
-        Debug.Log($"[AgoraConnectionStatus] Cinnection state: {state} Reason: {reason}");
+        Debug.Log($"[AgoraConnectionStatus] Connection state: {state} Reason: {reason}");
+        ChannelConnectionStatus channelConnectionStatus = new ChannelConnectionStatus(state, reason);
+        OnConnectionStatus?.Invoke(channelConnectionStatus);
     }
     
     public void RegisterOnChannelJoinOrLeft(Action<IChannelUserStatus> aEvent)
@@ -60,7 +66,7 @@ public class AgoraConnectionStatus : IChatConnectionEvents, IDisposable
         OnConnectionStatus += aEvent;
     }
 
-    public void DeregisterConnectionStatus(Action<IChannelConnectionStatus> aEvent)
+    public void DeregisterOnConnectionStatus(Action<IChannelConnectionStatus> aEvent)
     {
         OnConnectionStatus -= aEvent;
     }

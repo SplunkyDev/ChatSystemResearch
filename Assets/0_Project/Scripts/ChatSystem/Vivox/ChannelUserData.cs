@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Chat;
+using Chat.Vivox;
 using UnityEngine;
 using VivoxUnity;
 

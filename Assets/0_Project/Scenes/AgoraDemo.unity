@@ -580,6 +580,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
+      propertyPath: m_rectLogin
+      value: 
+      objectReference: {fileID: 1606529739}
+    - target: {fileID: 4688791327240714631, guid: 055547b21d698874196a620282a183a7, type: 3}
       propertyPath: m_rectChatUi
       value: 
       objectReference: {fileID: 1487790172}

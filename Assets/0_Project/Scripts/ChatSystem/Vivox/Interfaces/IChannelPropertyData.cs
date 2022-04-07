@@ -7,7 +7,6 @@ namespace Chat
         public string Username { get; }
         public ChannelId ChannelId { get; }
         public string Property { get; }
-
-
+        
     }
 }

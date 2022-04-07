@@ -1,7 +1,7 @@
 
 using VivoxUnity;
 
-namespace Chat
+namespace Chat.Vivox
 {
     public interface IChannelUserData
     {

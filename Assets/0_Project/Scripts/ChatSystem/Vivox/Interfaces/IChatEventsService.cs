@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VivoxUnity;
 
-namespace Chat
+namespace Chat.Vivox
 {
     public interface IChatEventsService
     {

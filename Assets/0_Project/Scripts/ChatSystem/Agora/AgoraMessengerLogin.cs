@@ -34,14 +34,17 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
         m_clientEventHandler = new RtmClientEventHandler();
         m_channelEventHandler = new RtmChannelEventHandler();
         // m_callEventHandler = new RtmCallEventHandler();
-        
-        m_rtmClient = new RtmClient(aAppId,m_clientEventHandler);
-        
-        
         m_clientEventHandler.OnQueryPeersOnlineStatusResult += OnQueryPeersOnlineStatusResultHandler;
         m_clientEventHandler.OnLoginSuccess += OnClientLoginSuccessHandler;
         m_clientEventHandler.OnLoginFailure += OnClientLoginFailureHandler;
         m_clientEventHandler.OnMessageReceivedFromPeer += OnMessageReceivedFromPeerHandler;
+        
+        m_channelEventHandler.OnJoinSuccess += OnJoinSuccessHandler;
+        m_channelEventHandler.OnJoinFailure += OnJoinFailureHandler;
+        m_channelEventHandler.OnLeave += OnLeaveHandler;
+        m_channelEventHandler.OnMessageReceived += OnChannelMessageReceivedHandler;
+        
+        m_rtmClient = new RtmClient(aAppId,m_clientEventHandler);
         
         m_agoraMessengerService =
             new AgoraMessengerService(m_rtmClient, m_clientEventHandler);
@@ -77,14 +80,9 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
         m_rtmChannel = m_rtmClient.CreateChannel(aChannelId, m_channelEventHandler);
         
         m_agoraMessengerService.Inject(m_rtmChannel,m_channelEventHandler);
-        m_channelEventHandler.OnJoinSuccess += OnJoinSuccessHandler;
-        m_channelEventHandler.OnJoinFailure += OnJoinFailureHandler;
-        m_channelEventHandler.OnLeave += OnLeaveHandler;
-        m_channelEventHandler.OnMessageReceived += OnChannelMessageReceivedHandler;
-        
         m_rtmChannel.Join();
         
-        Debug.Log($"[{GetType()}][CreateAndJoinChannel] Joining messenger channel{aChannelId}");
+        Debug.Log($"[{GetType()}][CreateAndJoinChannel] Joining messenger channel {aChannelId}");
     }
 
     public void LeaveChannel()
@@ -109,7 +107,7 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
     void OnClientLoginSuccessHandler(int id)
     {
         string msg = "client login successful! id = " + id;
-        Debug.Log(msg);
+        Debug.Log($"[{GetType()}][OnClientLoginSuccessHandler] {msg}");
         // messageDisplay.AddTextToDisplay(msg, Message.MessageType.Info);
     }
     
@@ -117,7 +115,7 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
     void OnClientLoginFailureHandler(int id, LOGIN_ERR_CODE errorCode)
     {
         string msg = "client login unsuccessful! id = " + id + " errorCode = " + errorCode;
-        Debug.Log(msg);
+        Debug.Log($"[{GetType()}][OnClientLoginFailureHandler] {msg}");
         // messageDisplay.AddTextToDisplay(msg, Message.MessageType.Error);
     }
     
@@ -183,14 +181,12 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
         
         if(m_rtmClient != null)
         {
-            m_rtmClient.Logout();
             m_rtmClient.Dispose();
             m_rtmClient = null;
         }
 
         if (m_rtmChannel != null)
         {
-            m_rtmChannel.Leave();
             m_rtmChannel.Dispose();
             m_rtmChannel = null;
         }

@@ -2,7 +2,7 @@ using System;
 using agora_gaming_rtc;
 using agora_rtm;
 using Chat.Agora;
-
+using UnityEngine;
 
 
 public class AgoraLogin : IChatLoginServices , IDisposable
@@ -69,11 +69,12 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     public void Login(string aDisplayName)
     {
         m_chatSystem.OnLoginComplete(m_rtcEngine.RegisterLocalUserAccount(m_strAppId, aDisplayName) >= 0);
+        m_agoraMessenger.Login(aDisplayName);
     }
 
     public void Logout()
     {
-
+        m_agoraMessenger.Logout();
     }
 
     public void CreateAndJoinChannel(string aTokenKey, string aChannelId, string aUsername, ChannelMediaOptions options)
@@ -82,6 +83,8 @@ public class AgoraLogin : IChatLoginServices , IDisposable
         m_rtcEngine.JoinChannelWithUserAccount(aTokenKey, aChannelId, aUsername, options);
         //Messenger API calling 
         m_agoraMessenger.CreateAndJoinChannel("",aChannelId,"",null);
+        
+        Debug.Log($"[{GetType()}][CreateAndJoinChannel] Joining channel{aChannelId}");
     }
 
     public void LeaveChannel()

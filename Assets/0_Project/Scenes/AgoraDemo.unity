@@ -600,6 +600,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6141500693662271766}
     - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
+      propertyPath: m_strRtcTokenKey
+      value: 0063cc1dfa9d1a041e4bda4008761d986f1IACFVDUsYZcl8kDPa4D3cueXSZBTJrlatbZ1RNqTK0BHz50BFtgAAAAAEAA3CeSjm2pRYgEAAQCZalFi
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
+      propertyPath: m_strRtmTokenKey
+      value: 0063cc1dfa9d1a041e4bda4008761d986f1IAA1ijZf0ryr6CERd6Pcu7hTMUDoiWTeT1PLkezI/1ZZm5fsv54AAAAAEAA3CeSj8i9RYgEAAQDwL1Fi
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
       propertyPath: m_textLoginStatus
       value: 
       objectReference: {fileID: 6141500693650570603}

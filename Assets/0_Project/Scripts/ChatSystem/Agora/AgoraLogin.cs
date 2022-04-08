@@ -14,7 +14,7 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     private IRtcEngine m_rtcEngine;
     //
     
-    private string m_strAppId, m_strTokenKey;
+    private string m_strAppId, m_strRtmTokenKey;
 
     private AgoraMessengerLogin m_agoraMessenger;
     private IChatConnectionEvents m_connectionEvents;
@@ -25,10 +25,10 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     #region Public fields
     #endregion
     
-    public AgoraLogin(Action<bool> OnVivoxInitialized, string aAppId, string aTokenKey, IChatSystem aChatSystem)
+    public AgoraLogin(Action<bool> OnVivoxInitialized, string aAppId, string aRtmTokenKey, IChatSystem aChatSystem)
     {
         m_strAppId = aAppId;
-        m_strTokenKey = aTokenKey;
+        m_strRtmTokenKey = aRtmTokenKey;
         m_chatSystem = aChatSystem;
         InitializeAgora(OnVivoxInitialized);
     }
@@ -56,7 +56,7 @@ public class AgoraLogin : IChatLoginServices , IDisposable
 
          m_connectionEvents = new AgoraConnectionStatus(m_rtcEngine);
          // m_MessageService = new AgoraChatMessageService(m_rtcEngine);
-         m_agoraMessenger = new AgoraMessengerLogin(this, m_strAppId, m_strTokenKey);
+         m_agoraMessenger = new AgoraMessengerLogin(this, m_strAppId, m_strRtmTokenKey);
          
          DependencyContainer.instance.RegisterToContainer<IChatLoginServices>(this);
     }
@@ -78,7 +78,10 @@ public class AgoraLogin : IChatLoginServices , IDisposable
 
     public void CreateAndJoinChannel(string aTokenKey, string aChannelId, string aUsername, ChannelMediaOptions options)
     {
+        //Voice chat API calling 
         m_rtcEngine.JoinChannelWithUserAccount(aTokenKey, aChannelId, aUsername, options);
+        //Messenger API calling 
+        m_agoraMessenger.CreateAndJoinChannel("",aChannelId,"",null);
     }
 
     public void LeaveChannel()
@@ -88,13 +91,13 @@ public class AgoraLogin : IChatLoginServices , IDisposable
 
     public void Dispose()
     {
-        m_agoraMessenger.Dispose();
-        m_agoraMessenger = null;
         if(m_rtcEngine != null)
         {
             m_rtcEngine.OnLocalUserRegistered -= OnLoginComplete;
             m_rtcEngine.LeaveChannel();
         }
         IRtcEngine.Destroy();
+        m_agoraMessenger.Dispose();
+        m_agoraMessenger = null;
     }
 }

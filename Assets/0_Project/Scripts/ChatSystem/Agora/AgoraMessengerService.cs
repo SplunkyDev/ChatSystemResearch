@@ -20,16 +20,22 @@ public class AgoraMessengerService :  IChatMessageService, IDisposable
     #region Public fields
     #endregion
     
-    public AgoraMessengerService(RtmClient aRtmClient,RtmChannel aRtmChannel, RtmClientEventHandler aClientEventHandler, RtmChannelEventHandler aChannelEventHandler)
+    public AgoraMessengerService(RtmClient aRtmClient, RtmClientEventHandler aClientEventHandler )
     {
         m_rtmClient = aRtmClient;
-        m_rtmChannel = aRtmChannel;
+        
         m_clientEventHandler = aClientEventHandler;
         m_clientEventHandler.OnMessageReceivedFromPeer += OnMessageReceivedFromPeerHandler;
+      
+    }
+
+    public void Inject(RtmChannel aRtmChannel, RtmChannelEventHandler aChannelEventHandler)
+    {
+        m_rtmChannel = aRtmChannel;
         m_channelEventHandler = aChannelEventHandler;
         m_channelEventHandler.OnMessageReceived += OnChannelMessageReceivedHandler;
     }
-
+    
     // Callback when receiving a peer-to-peer message
     private void OnMessageReceivedFromPeerHandler(int id, string peerId, TextMessage message)
     {
@@ -48,11 +54,21 @@ public class AgoraMessengerService :  IChatMessageService, IDisposable
     
     public void SendMessageToAll(string aMessage)
     {
+        if (m_rtmChannel == null)
+        {
+            Debug.LogError($"[{GetType()}][SendMessageToAll] Channel reference is null,cannot send message");
+            return;
+        }
         m_rtmChannel.SendMessage(m_rtmClient.CreateMessage(aMessage));
     }
 
     public void SendMessageToSpecifUser(string aUsername, string aMessage)
     {
+        if (m_rtmClient == null)
+        {
+            Debug.LogError($"[{GetType()}][SendMessageToSpecifUser] Client reference is null,cannot send peer to peer message");
+            return;
+        }
         m_rtmClient.SendMessageToPeer(aUsername, m_rtmClient.CreateMessage(aMessage));
     }
 

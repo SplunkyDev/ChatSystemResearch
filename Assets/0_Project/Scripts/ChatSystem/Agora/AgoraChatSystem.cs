@@ -15,7 +15,9 @@ namespace Chat.Agora
         //This needs to be handled differently on production
         [SerializeField] private string m_strAppId;
         //This needs to be handled differently on production
-        [SerializeField] private string m_strTokenKey;
+        [SerializeField] private string m_strRtcTokenKey;
+        //This needs to be handled differently on production
+        [SerializeField] private string m_strRtmTokenKey;
         [SerializeField] private InputField m_inputFieldUsername,m_inputFieldChannelName;
         [SerializeField] private Text m_textLoginStatus;
         [SerializeField] private RectTransform m_rectJoinNetworkUi, m_rectChatUi;
@@ -131,7 +133,7 @@ namespace Chat.Agora
                     Debug.LogError("[ChatSystem] Agora initialization failed");
                 }
             
-            }),m_strAppId, m_strTokenKey, this);
+            }),m_strAppId, m_strRtmTokenKey, this);
 
 
         }
@@ -145,7 +147,7 @@ namespace Chat.Agora
                 return;
             }
 
-            m_chatLoginServices.CreateAndJoinChannel(m_strTokenKey,aChannelName,m_strUserName,new ChannelMediaOptions(true,false,true,false));
+            m_chatLoginServices.CreateAndJoinChannel(m_strRtcTokenKey,aChannelName,m_strUserName,new ChannelMediaOptions(true,false,true,false));
         }
         
         public void SendChatMessageToAll(string aMessage)
@@ -188,7 +190,7 @@ namespace Chat.Agora
 
         private void OnLocalUserStatusChanged(IChannelConnectionStatus aChannelConnectionStatus)
         {
-            Debug.Log($"[AgoraConnectionStatus] Connection state: {aChannelConnectionStatus.eConnectionState} Reason: {aChannelConnectionStatus.eConnectionChangeReason}");
+            Debug.Log($"[{GetType()}] Connection state: {aChannelConnectionStatus.eConnectionState} Reason: {aChannelConnectionStatus.eConnectionChangeReason}");
             switch (aChannelConnectionStatus.eConnectionState)
             {
                 case CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED:

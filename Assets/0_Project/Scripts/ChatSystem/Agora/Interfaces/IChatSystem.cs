@@ -10,6 +10,7 @@ namespace Chat.Agora
         void OnChannelJoined(bool aSuccess);
         void CreateAndJoinChannel(string aChannelName);
         void SendChatMessageToAll(string aMessage);
+        void SenChatMessageToSpecificUser(string aUserName, string aMessage);
         void LeaveChannel();
         
         //TODO: Implement specific player message

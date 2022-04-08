@@ -16,9 +16,10 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     
     private string m_strAppId, m_strTokenKey;
 
+    private AgoraMessengerLogin m_agoraMessenger;
     private IChatConnectionEvents m_connectionEvents;
     private IChatDebugEvents m_debugEvents;
-    private IChatMessageService _mMessageService;
+    private IChatMessageService m_messageService;
     #endregion
     
     #region Public fields
@@ -31,6 +32,15 @@ public class AgoraLogin : IChatLoginServices , IDisposable
         m_chatSystem = aChatSystem;
         InitializeAgora(OnVivoxInitialized);
     }
+
+    public void Inject(IChatMessageService aMessageService)
+    {
+        m_messageService = aMessageService;
+        m_chatSystem.Inject(m_connectionEvents,m_messageService);
+        DependencyContainer.instance.RegisterToContainer<IChatConnectionEvents>(m_connectionEvents);
+        DependencyContainer.instance.RegisterToContainer<IChatMessageService>(m_messageService);
+    }
+    
 
     private async void InitializeAgora(Action<bool> OnVivoxInitialized)
     {
@@ -45,15 +55,10 @@ public class AgoraLogin : IChatLoginServices , IDisposable
          m_rtcEngine.OnLocalUserRegistered += OnLoginComplete;
 
          m_connectionEvents = new AgoraConnectionStatus(m_rtcEngine);
-         _mMessageService = new AgoraMessengerLogin(m_rtcEngine);
+         // m_MessageService = new AgoraChatMessageService(m_rtcEngine);
+         m_agoraMessenger = new AgoraMessengerLogin(this, m_strAppId, m_strTokenKey);
          
          DependencyContainer.instance.RegisterToContainer<IChatLoginServices>(this);
-         DependencyContainer.instance.RegisterToContainer<IChatConnectionEvents>(m_connectionEvents);
-         DependencyContainer.instance.RegisterToContainer<IChatMessageService>(_mMessageService);
-         
-         m_chatSystem.Inject(m_connectionEvents,_mMessageService);
-         
-         
     }
 
     private void OnLoginComplete(uint aUid, string aUsername)
@@ -83,6 +88,8 @@ public class AgoraLogin : IChatLoginServices , IDisposable
 
     public void Dispose()
     {
+        m_agoraMessenger.Dispose();
+        m_agoraMessenger = null;
         if(m_rtcEngine != null)
         {
             m_rtcEngine.OnLocalUserRegistered -= OnLoginComplete;

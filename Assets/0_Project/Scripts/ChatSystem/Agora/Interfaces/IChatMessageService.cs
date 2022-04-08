@@ -3,9 +3,7 @@ namespace Chat.Agora
     public interface IChatMessageService
     {
         void SendMessageToAll(string aMessage);
-        
-        //TODO: Look into Peer to Peer messaging
-        // void SendMessageToSpecifUser();
+        void SendMessageToSpecifUser(string aUsername, string aMessage);
         
         //On message received callback
         void RegisterOnChatMessageReceived(System.Action<IMessage> aEvent);

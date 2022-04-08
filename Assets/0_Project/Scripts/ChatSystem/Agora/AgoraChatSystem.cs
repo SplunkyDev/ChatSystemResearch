@@ -154,6 +154,11 @@ namespace Chat.Agora
             m_messageService.SendMessageToAll(aMessage);
         }
 
+        public void SenChatMessageToSpecificUser(string aUserName, string aMessage)
+        {
+            m_messageService.SendMessageToSpecifUser(aUserName,aMessage);
+        }
+
         public void LeaveChannel()
         {
             m_chatLoginServices.LeaveChannel();

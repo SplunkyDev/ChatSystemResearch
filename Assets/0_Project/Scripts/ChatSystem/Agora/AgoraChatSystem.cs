@@ -131,7 +131,7 @@ namespace Chat.Agora
                     Debug.LogError("[ChatSystem] Agora initialization failed");
                 }
             
-            }),m_strAppId, this);
+            }),m_strAppId, m_strTokenKey, this);
 
 
         }

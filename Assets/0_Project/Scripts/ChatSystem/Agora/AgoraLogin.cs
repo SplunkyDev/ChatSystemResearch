@@ -1,16 +1,20 @@
 using System;
 using agora_gaming_rtc;
+using agora_rtm;
 using Chat.Agora;
-using PlayFab.ClientModels;
-using UnityEngine;
+
 
 
 public class AgoraLogin : IChatLoginServices , IDisposable
 {
     #region Private fields
+    
     private IChatSystem m_chatSystem;
+    //Voice chat
     private IRtcEngine m_rtcEngine;
-    private string m_strAppId;
+    //
+    
+    private string m_strAppId, m_strTokenKey;
 
     private IChatConnectionEvents m_connectionEvents;
     private IChatDebugEvents m_debugEvents;
@@ -20,9 +24,10 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     #region Public fields
     #endregion
     
-    public AgoraLogin(Action<bool> OnVivoxInitialized, string aAppId, IChatSystem aChatSystem)
+    public AgoraLogin(Action<bool> OnVivoxInitialized, string aAppId, string aTokenKey, IChatSystem aChatSystem)
     {
         m_strAppId = aAppId;
+        m_strTokenKey = aTokenKey;
         m_chatSystem = aChatSystem;
         InitializeAgora(OnVivoxInitialized);
     }
@@ -36,16 +41,19 @@ public class AgoraLogin : IChatLoginServices , IDisposable
              return;
          }
          OnVivoxInitialized.Invoke(true);
+         
          m_rtcEngine.OnLocalUserRegistered += OnLoginComplete;
 
          m_connectionEvents = new AgoraConnectionStatus(m_rtcEngine);
-         _mMessageService = new AgoraMessageService(m_rtcEngine);
+         _mMessageService = new AgoraMessengerLogin(m_rtcEngine);
          
          DependencyContainer.instance.RegisterToContainer<IChatLoginServices>(this);
          DependencyContainer.instance.RegisterToContainer<IChatConnectionEvents>(m_connectionEvents);
          DependencyContainer.instance.RegisterToContainer<IChatMessageService>(_mMessageService);
          
          m_chatSystem.Inject(m_connectionEvents,_mMessageService);
+         
+         
     }
 
     private void OnLoginComplete(uint aUid, string aUsername)

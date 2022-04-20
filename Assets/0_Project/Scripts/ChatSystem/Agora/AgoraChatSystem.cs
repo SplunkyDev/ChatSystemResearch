@@ -12,8 +12,8 @@ namespace Chat.Agora
     public class AgoraChatSystem : MonoBehaviour , IChatSystem
     {
         #region Serialize fields
-        //This needs to be handled differently on production
         [SerializeField] private string m_strAppId;
+        [SerializeField] private string m_strAppCert;
         //This needs to be handled differently on production
         [SerializeField] private string m_strRtcTokenKey;
         //This needs to be handled differently on production
@@ -133,7 +133,7 @@ namespace Chat.Agora
                     Debug.LogError("[ChatSystem] Agora initialization failed");
                 }
             
-            }),m_strAppId, m_strRtmTokenKey, this);
+            }),m_strAppId,m_strAppCert, m_strRtmTokenKey, this);
 
 
         }

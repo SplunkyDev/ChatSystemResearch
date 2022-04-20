@@ -1,6 +1,7 @@
 using System;
 using agora_gaming_rtc;
 using agora_rtm;
+using AgoraIO.AccessToken;
 using Chat.Agora;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     private IRtcEngine m_rtcEngine;
     //
     
-    private string m_strAppId, m_strRtmTokenKey;
+    private string m_strAppId, m_strRtmTokenKey, m_strAppCertificate;
 
     private AgoraMessengerLogin m_agoraMessenger;
     private IChatConnectionEvents m_connectionEvents;
@@ -25,10 +26,19 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     #region Public fields
     #endregion
     
-    public AgoraLogin(Action<bool> OnVivoxInitialized, string aAppId, string aRtmTokenKey, IChatSystem aChatSystem)
+    public AgoraLogin(Action<bool> OnVivoxInitialized, string aAppId, string aAppCert, string aRtmTokenKey, IChatSystem aChatSystem)
     {
+        if(string.IsNullOrEmpty(aAppId))
+            Debug.LogError($"[AgoraLogin] App Id is empty");
+        
         m_strAppId = aAppId;
+        
+        if(string.IsNullOrEmpty(aAppCert))
+            Debug.LogError($"[AgoraLogin] App Certification is empty");
+        m_strAppCertificate = aAppCert;
+        
         m_strRtmTokenKey = aRtmTokenKey;
+        
         m_chatSystem = aChatSystem;
         InitializeAgora(OnVivoxInitialized);
     }
@@ -45,6 +55,8 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     private async void InitializeAgora(Action<bool> OnVivoxInitialized)
     {
          m_rtcEngine = IRtcEngine.GetEngine(m_strAppId);
+         m_rtcEngine.SetAudioProfile(AUDIO_PROFILE_TYPE.AUDIO_PROFILE_SPEECH_STANDARD,AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_CHATROOM_GAMING);
+         
          if (m_rtcEngine == null)
          {
              OnVivoxInitialized.Invoke(false);
@@ -56,7 +68,7 @@ public class AgoraLogin : IChatLoginServices , IDisposable
 
          m_connectionEvents = new AgoraConnectionStatus(m_rtcEngine);
          // m_MessageService = new AgoraChatMessageService(m_rtcEngine);
-         m_agoraMessenger = new AgoraMessengerLogin(this, m_strAppId, m_strRtmTokenKey);
+         m_agoraMessenger = new AgoraMessengerLogin(this, m_strAppId, m_strAppCertificate, m_strRtmTokenKey);
          
          DependencyContainer.instance.RegisterToContainer<IChatLoginServices>(this);
     }
@@ -79,8 +91,15 @@ public class AgoraLogin : IChatLoginServices , IDisposable
 
     public void CreateAndJoinChannel(string aTokenKey, string aChannelId, string aUsername, ChannelMediaOptions options)
     {
+        //Generating token for voice chat here 
+        AccessToken accessToken =
+            new AccessToken(m_strAppId, m_strAppCertificate, aChannelId, "");
+        accessToken.addPrivilege(Privileges.kJoinChannel,(uint)(Utils.getTimestamp()+90));
+        string strTokenKey = accessToken.build();
+        
+        Debug.Log($"[AgoraLogin] Voice Chat Token: {strTokenKey}");
         //Voice chat API calling 
-        m_rtcEngine.JoinChannelWithUserAccount(aTokenKey, aChannelId, aUsername, options);
+        m_rtcEngine.JoinChannelWithUserAccount(strTokenKey, aChannelId, aUsername, options);
         //Messenger API calling 
         m_agoraMessenger.CreateAndJoinChannel("",aChannelId,"",null);
         

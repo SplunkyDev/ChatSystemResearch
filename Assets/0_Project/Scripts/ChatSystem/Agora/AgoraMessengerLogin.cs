@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using agora_gaming_rtc;
 using agora_rtm;
+using AgoraIO.AccessToken;
 using Chat.Agora;
 using UnityEngine;
 
@@ -9,8 +10,7 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
 {
     #region  Private fields
 
-    private string m_strAppId, m_strTokenKey, m_strUsername, m_strChannelName;
-    
+    private string m_strAppId, m_strTokenKey, m_strUsername, m_strChannelName, m_strAppCertificate;
     //Real time messaging
     private RtmClient m_rtmClient;
     private RtmChannel m_rtmChannel;
@@ -24,9 +24,17 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
     private AgoraMessengerService m_agoraMessengerService;
     #endregion
 
-    public AgoraMessengerLogin(AgoraLogin aAgoraLogin, string aAppId, string aTokenKey)
+    public AgoraMessengerLogin(AgoraLogin aAgoraLogin, string aAppId, string aAppCert, string aTokenKey)
     {
+        if(string.IsNullOrEmpty(aAppId))
+            Debug.LogError($"[AgoraMessengerLogin] App Id is empty");
+        
         m_strAppId = aAppId;
+        
+        if(string.IsNullOrEmpty(aAppCert))
+            Debug.LogError($"[AgoraMessengerLogin] App Certification is empty");
+        m_strAppCertificate = aAppCert;
+        
         m_strTokenKey = aTokenKey;
         
         m_agoraLogin = aAgoraLogin;
@@ -58,14 +66,20 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
             Debug.LogError($"[{GetType()}][Login] username is empty. Cannot login");
             return;
         }
-
+        
+        m_strUsername = aDisplayName;
+        
+        //Generate token for real time messaging using username here 
+        AgoraIO.AccessToken.AccessToken accessToken =
+            new AccessToken(m_strAppId, m_strAppCertificate, aDisplayName, "");
+        accessToken.addPrivilege(Privileges.kRtmLogin,(uint)(Utils.getTimestamp()+90));
+        m_strTokenKey = accessToken.build();
+        Debug.Log($"[AgoraMessengerLogin] Real-time messaging Token: {m_strTokenKey}");
         if (string.IsNullOrEmpty(m_strTokenKey))
         {
             Debug.LogError($"[{GetType()}][Login] Token is empty. Cannot login");
             return;
         }
-
-        m_strUsername = aDisplayName;
         m_rtmClient.Login(m_strTokenKey, m_strUsername);
     }
 

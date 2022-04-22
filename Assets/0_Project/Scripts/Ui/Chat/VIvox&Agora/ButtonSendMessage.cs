@@ -15,6 +15,7 @@ namespace Chat
         #region Serialize fields
 
         [SerializeField] private InputField m_inputFieldMessage;
+        [SerializeField] private InputField m_inputFieldPeer;
 
         #endregion
 
@@ -31,7 +32,15 @@ namespace Chat
         {
             if (m_chatSystem != null)
             {
-                m_chatSystem.SendChatMessageToAll(m_inputFieldMessage.text);
+                string strPeerUSerName = m_inputFieldPeer.text;
+                if (string.IsNullOrEmpty(strPeerUSerName))
+                {
+                    m_chatSystem.SenChatMessageToSpecificUser(strPeerUSerName,m_inputFieldMessage.text);
+                }
+                else
+                {
+                    m_chatSystem.SendChatMessageToAll(m_inputFieldMessage.text);
+                }
             }
 
             base.OnPointerUp(eventData);

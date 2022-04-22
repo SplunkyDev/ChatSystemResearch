@@ -93,16 +93,10 @@ public class AgoraLogin : IChatLoginServices , IDisposable
 
     public void CreateAndJoinChannel(string aTokenKey, string aChannelId, string aUsername, ChannelMediaOptions options)
     {
-        Debug.Log($"[AgoraLogin][CreateAndJoinChannel] App Id: {m_strAppId} App Cert: {m_strAppCertificate} Channel Id: {aChannelId} Username: {aUsername}");
-        Debug.Log($"[AgoraLogin][CreateAndJoinChannel] Channel Length: {aChannelId.Length} Username Length: {aUsername.Length}");
-        // Generating token for voice chat here 
-        // AccessToken accessToken =
-        //     new AccessToken(m_strAppId, m_strAppCertificate, aChannelId, "");
-        // accessToken.addPrivilege(Privileges.kJoinChannel,(uint)(Utils.getTimestamp()+300));
-        // string strTokenKey = accessToken.build();
+        Debug.Log($"<color=green>[AgoraLogin][CreateAndJoinChannel] App Id: {m_strAppId} App Cert: {m_strAppCertificate} Channel Id: {aChannelId} Username: {aUsername}</color>");
         string strTokenKey = aTokenKey;
         
-        Debug.Log($"[AgoraLogin] Voice Chat Token: {strTokenKey}");
+        Debug.Log($"<color=green>[AgoraLogin] Voice Chat Token: {strTokenKey}</color>");
         // m_rtcEngine.JoinChannelByKey(strTokenKey, aChannelId, "", (uint)UnityEngine.Random.Range(1,999));
         
         //Voice chat API calling 

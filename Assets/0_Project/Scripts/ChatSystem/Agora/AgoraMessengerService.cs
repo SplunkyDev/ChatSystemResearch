@@ -39,7 +39,7 @@ public class AgoraMessengerService :  IChatMessageService, IDisposable
     // Callback when receiving a peer-to-peer message
     private void OnMessageReceivedFromPeerHandler(int id, string peerId, TextMessage message)
     {
-        Debug.Log("client OnMessageReceivedFromPeer id = " + id + ", from user:" + peerId + " text:" + message.GetText());
+        Debug.Log($"[{GetType().Name}]client OnMessageReceivedFromPeer id: {id} , from user:  {peerId}  text: {message.GetText()}");
         ChatMessage chatMessage = new ChatMessage(id.ToString(), peerId,  message.GetText());
         OnMessageReceived?.Invoke(chatMessage);
     }
@@ -47,7 +47,7 @@ public class AgoraMessengerService :  IChatMessageService, IDisposable
     // Callback when receiving a channel message
     void OnChannelMessageReceivedHandler(int id, string userId, TextMessage message)
     {
-        Debug.Log("client OnChannelMessageReceived id = " + id + ", from user:" + userId + " text:" + message.GetText());
+        Debug.Log($"[{GetType().Name}]client OnChannelMessageReceived id: {id} , from user:  {userId}  text: {message.GetText()}");
         ChatMessage chatMessage = new ChatMessage(id.ToString(), userId,  message.GetText());
         OnMessageReceived?.Invoke(chatMessage);
     }

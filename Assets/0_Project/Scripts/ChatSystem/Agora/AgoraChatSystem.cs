@@ -122,6 +122,8 @@ namespace Chat.Agora
             }
 
 #endif
+
+            // Debug.Log($"If string is 1: {bool.Parse("1")} if string is 0: {bool.Parse("0")}"); 
             m_rectLogin.gameObject.SetActive(true);
             DependencyContainer.instance.RegisterToContainer<IChatSystem>(this);
             m_textLoginStatus.text = "Initializing Agora";

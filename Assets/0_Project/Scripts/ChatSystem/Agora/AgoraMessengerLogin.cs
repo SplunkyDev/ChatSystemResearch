@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using agora_gaming_rtc;
 using agora_rtm;
 using AgoraIO.Media;
@@ -22,6 +23,9 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
     
     private AgoraLogin m_agoraLogin;
     private AgoraMessengerService m_agoraMessengerService;
+
+    private List<string> m_lstJoinedMembers = new List<string>();
+    private long m_lRequestId = 0;
     #endregion
 
     public AgoraMessengerLogin(AgoraLogin aAgoraLogin, string aAppId, string aAppCert, string aTokenKey)
@@ -46,13 +50,18 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
         m_clientEventHandler.OnLoginSuccess += OnClientLoginSuccessHandler;
         m_clientEventHandler.OnLoginFailure += OnClientLoginFailureHandler;
         m_clientEventHandler.OnMessageReceivedFromPeer += OnMessageReceivedFromPeerHandler;
+        m_clientEventHandler.OnPeersOnlineStatusChanged += OnPeersOnlineStatusChangedHandler;
         
         m_channelEventHandler.OnJoinSuccess += OnJoinSuccessHandler;
         m_channelEventHandler.OnJoinFailure += OnJoinFailureHandler;
         m_channelEventHandler.OnLeave += OnLeaveHandler;
         m_channelEventHandler.OnMessageReceived += OnChannelMessageReceivedHandler;
+        m_channelEventHandler.OnMemberJoined += OnMemberJoinedHandler;
+        m_channelEventHandler.OnMemberLeft += OnMemberLeftHandler;
         
         m_rtmClient = new RtmClient(aAppId,m_clientEventHandler);
+
+      
         
         m_agoraMessengerService =
             new AgoraMessengerService(m_rtmClient, m_clientEventHandler);
@@ -74,7 +83,7 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
             new AccessToken(m_strAppId, m_strAppCertificate, aDisplayName, "");
         accessToken.addPrivilege(Privileges.kRtmLogin,(uint)(Utils.getTimestamp()+90));
         m_strTokenKey = accessToken.build();
-        Debug.Log($"[AgoraMessengerLogin] Real-time messaging Token: {m_strTokenKey}");
+        Debug.Log($"<color=green>[AgoraMessengerLogin] Real-time messaging Token: {m_strTokenKey}</color>");
         if (string.IsNullOrEmpty(m_strTokenKey))
         {
             Debug.LogError($"[{GetType()}][Login] Token is empty. Cannot login");
@@ -139,6 +148,15 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
         Debug.Log("client OnMessageReceivedFromPeer id = " + id + ", from user:" + peerId + " text:" + message.GetText());
         // messageDisplay.AddTextToDisplay(peerId + ": " + message.GetText(), Message.MessageType.PeerMessage);
     }
+
+    void OnPeersOnlineStatusChangedHandler(int aId, PeerOnlineStatus[] aPeerOnlineStatusArray, int aPeerCount)
+    {
+        Debug.Log($"Peer count: {aPeerCount} ");
+        for (int i = 0; i < aPeerCount; i++)
+        {
+            Debug.Log($" Peer Id: {aPeerOnlineStatusArray[i].peerId} Peer status: {aPeerOnlineStatusArray[i].onlineState.ToString()} ");
+        }
+    }
     #endregion
     
     #region Channel Events
@@ -172,6 +190,26 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
         // messageDisplay.AddTextToDisplay(userId + ": " + message.GetText(), Message.MessageType.ChannelMessage);
     }
     
+    // Callback when a remote member joins the channel
+    void OnMemberJoinedHandler(int id, RtmChannelMember member)
+    {
+        string msg = "channel OnMemberJoinedHandler member ID=" + member.GetUserId() + " channelId = " + member.GetChannelId();
+        Debug.Log(msg);
+
+        if (!m_lstJoinedMembers.Contains(member.GetUserId()))
+        {
+            m_lstJoinedMembers.Add(member.GetUserId());
+            m_lRequestId++;
+            m_rtmClient.SubscribePeersOnlineStatus(m_lstJoinedMembers.ToArray(), m_lRequestId);
+        }
+    }
+    
+    // Callback when a remote member leaves the channel
+    void OnMemberLeftHandler(int id, RtmChannelMember member)
+    {
+        string msg = "channel OnMemberLeftHandler member ID=" + member.GetUserId() + " channelId = " + member.GetChannelId();
+        Debug.Log(msg);
+    }
     #endregion
 
     public void Dispose()
@@ -183,18 +221,22 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
             m_clientEventHandler.OnLoginSuccess -= OnClientLoginSuccessHandler;
             m_clientEventHandler.OnLoginFailure -= OnClientLoginFailureHandler;
             m_clientEventHandler.OnMessageReceivedFromPeer -= OnMessageReceivedFromPeerHandler;
+            m_clientEventHandler.OnPeersOnlineStatusChanged += OnPeersOnlineStatusChangedHandler;
         }
 
         if (m_channelEventHandler != null)
         {
-            m_channelEventHandler.OnJoinSuccess += OnJoinSuccessHandler;
-            m_channelEventHandler.OnJoinFailure += OnJoinFailureHandler;
-            m_channelEventHandler.OnLeave += OnLeaveHandler;
-            m_channelEventHandler.OnMessageReceived += OnChannelMessageReceivedHandler;
+            m_channelEventHandler.OnJoinSuccess -= OnJoinSuccessHandler;
+            m_channelEventHandler.OnJoinFailure -= OnJoinFailureHandler;
+            m_channelEventHandler.OnLeave -= OnLeaveHandler;
+            m_channelEventHandler.OnMessageReceived -= OnChannelMessageReceivedHandler;
+            m_channelEventHandler.OnMemberJoined -= OnMemberJoinedHandler;
+            m_channelEventHandler.OnMemberLeft -= OnMemberLeftHandler;
         }
         
         if(m_rtmClient != null)
         {
+            m_rtmClient.UnsubscribePeersOnlineStatus(m_lstJoinedMembers.ToArray(), ++m_lRequestId);
             m_rtmClient.Dispose();
             m_rtmClient = null;
         }

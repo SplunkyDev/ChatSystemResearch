@@ -482,6 +482,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1107321768344242486, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107321768344242486, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107321768443684864, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107321768443684864, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107321768443684864, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107321768480490728, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107321769157974646, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -504.94922
+      objectReference: {fileID: 0}
     - target: {fileID: 1107321769721567107, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
       propertyPath: m_Name
       value: Canvas_Agora
@@ -605,7 +633,7 @@ PrefabInstance:
       objectReference: {fileID: 6141500693662271766}
     - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
       propertyPath: m_strRtcTokenKey
-      value: 0063cc1dfa9d1a041e4bda4008761d986f1IADO6j1qH3w6xRxWXYOzAhaP9EOQgSMCh89EVmy2YXTuEp0BFtiX7L+eIgA1NGI0NoljYgQAAQAhiWNiAgAhiWNiAwAhiWNiBAAhiWNi
+      value: 0063cc1dfa9d1a041e4bda4008761d986f1IADKG3HoOvp09EbR01SZPHZRtJ+1T+QdkNitoJIywhhR3Z0BFtgAAAAAEACKbcvBR6ZjYgEAAQBHpmNi
       objectReference: {fileID: 0}
     - target: {fileID: 4296739326285128632, guid: d5400637c9bc50349b692187ac834a62, type: 3}
       propertyPath: m_strRtmTokenKey

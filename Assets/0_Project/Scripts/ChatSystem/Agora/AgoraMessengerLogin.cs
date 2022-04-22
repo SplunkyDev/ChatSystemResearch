@@ -51,6 +51,7 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
         m_clientEventHandler.OnLoginFailure += OnClientLoginFailureHandler;
         m_clientEventHandler.OnMessageReceivedFromPeer += OnMessageReceivedFromPeerHandler;
         m_clientEventHandler.OnPeersOnlineStatusChanged += OnPeersOnlineStatusChangedHandler;
+        m_clientEventHandler.OnSendMessageResult += OnSendMessageResultHandler;
         
         m_channelEventHandler.OnJoinSuccess += OnJoinSuccessHandler;
         m_channelEventHandler.OnJoinFailure += OnJoinFailureHandler;
@@ -157,6 +158,12 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
             Debug.Log($" Peer Id: {aPeerOnlineStatusArray[i].peerId} Peer status: {aPeerOnlineStatusArray[i].onlineState.ToString()} ");
         }
     }
+    
+    // Returns the result of the `SendMessage` method call
+    void OnSendMessageResultHandler(int id, long messageId, PEER_MESSAGE_ERR_CODE errorCode)
+    {
+        Debug.Log($"[{GetType()}][OnSendMessageResultHandler] Sent message with id:{id} MessageId:{messageId} errorCode:{errorCode}");
+    }
     #endregion
     
     #region Channel Events
@@ -221,7 +228,8 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
             m_clientEventHandler.OnLoginSuccess -= OnClientLoginSuccessHandler;
             m_clientEventHandler.OnLoginFailure -= OnClientLoginFailureHandler;
             m_clientEventHandler.OnMessageReceivedFromPeer -= OnMessageReceivedFromPeerHandler;
-            m_clientEventHandler.OnPeersOnlineStatusChanged += OnPeersOnlineStatusChangedHandler;
+            m_clientEventHandler.OnPeersOnlineStatusChanged -= OnPeersOnlineStatusChangedHandler;
+            m_clientEventHandler.OnSendMessageResult -= OnSendMessageResultHandler;
         }
 
         if (m_channelEventHandler != null)

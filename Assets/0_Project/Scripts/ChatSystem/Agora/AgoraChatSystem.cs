@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using agora_gaming_rtc;
-using Chat.Agora;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.UI;
+#if PLATFORM_ANDROID
+using UnityEngine.Android;
+#endif
 
 namespace Chat.Agora
 {
@@ -116,6 +115,12 @@ namespace Chat.Agora
             {
                 Permission.RequestUserPermission(Permission.Microphone);
             }
+            
+            if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
+            {
+                Permission.RequestUserPermission(Permission.ExternalStorageWrite);
+            }
+
 #endif
             m_rectLogin.gameObject.SetActive(true);
             DependencyContainer.instance.RegisterToContainer<IChatSystem>(this);

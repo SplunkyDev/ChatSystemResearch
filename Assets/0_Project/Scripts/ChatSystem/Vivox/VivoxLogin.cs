@@ -5,9 +5,7 @@ using Unity.Services.Core;
 using Unity.Services.Vivox;
 using VivoxUnity;
 using System.ComponentModel;
-using System.Linq;
 using UnityEngine;
-using VivoxAccessToken;
 
 namespace Chat.Vivox
 {

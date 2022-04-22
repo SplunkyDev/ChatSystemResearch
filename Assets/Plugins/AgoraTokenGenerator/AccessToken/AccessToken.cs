@@ -1,7 +1,7 @@
 ﻿using Crc32C;
 using System;
 using System.IO;
-
+using UnityEngine;
 namespace AgoraIO.AccessToken
 {
     public class AccessToken
@@ -16,7 +16,7 @@ namespace AgoraIO.AccessToken
         private uint _crcChannelName;
         private uint _crcUid;
         private byte[] _messageRawContent;
-        public PrivilegeMessage message = new PrivilegeMessage();
+        public PrivilegeMessage message;
 
         public AccessToken(string appId, string appCertificate, string channelName, string uid)
         {
@@ -24,6 +24,9 @@ namespace AgoraIO.AccessToken
             _appCertificate = appCertificate;
             _channelName = channelName;
             _uid = uid;
+            
+            Debug.Log($"<color=green>[{GetType()}]App Id: {_appId} App Cert: {_appCertificate} Channel Id: {_channelName} Username: {_uid}</color>");
+            message = new PrivilegeMessage();
         }
 
         public AccessToken(string appId, string appCertificate, string channelName, string uid, uint ts, uint salt)
@@ -32,6 +35,7 @@ namespace AgoraIO.AccessToken
             this._appCertificate = appCertificate;
             this._channelName = channelName;
             this._uid = uid;
+            this.message = new PrivilegeMessage();
             this._ts = ts;
             this._salt = salt;
         }
@@ -68,7 +72,7 @@ namespace AgoraIO.AccessToken
                 , String uid
                 , byte[] message)
         {
-
+            Debug.Log($"<color=green>[AccessToken]App Id: {appID} App Cert: {appCertificate} Channel Id: {channelName} Username: {uid}</color>");
             using (var ms = new MemoryStream())
             using (BinaryWriter baos = new BinaryWriter(ms))
             {

@@ -1,7 +1,6 @@
 using System;
 using agora_gaming_rtc;
-using agora_rtm;
-using AgoraIO.AccessToken;
+using AgoraIO.Media;
 using Chat.Agora;
 using UnityEngine;
 
@@ -96,14 +95,12 @@ public class AgoraLogin : IChatLoginServices , IDisposable
     {
         Debug.Log($"[AgoraLogin][CreateAndJoinChannel] App Id: {m_strAppId} App Cert: {m_strAppCertificate} Channel Id: {aChannelId} Username: {aUsername}");
         Debug.Log($"[AgoraLogin][CreateAndJoinChannel] Channel Length: {aChannelId.Length} Username Length: {aUsername.Length}");
-        //Generating token for voice chat here 
-        AccessToken accessToken =
-            new AccessToken(m_strAppId, m_strAppCertificate, aChannelId, "");
-        accessToken.addPrivilege(Privileges.kJoinChannel,(uint)(Utils.getTimestamp()+90));
-        accessToken.addPrivilege(Privileges.kPublishAudioStream,(uint)(Utils.getTimestamp()+90));
-        accessToken.addPrivilege(Privileges.kPublishDataStream,(uint)(Utils.getTimestamp()+90));
-        string strTokenKey = accessToken.build();
-         // string strTokenKey = aTokenKey;
+        // Generating token for voice chat here 
+        // AccessToken accessToken =
+        //     new AccessToken(m_strAppId, m_strAppCertificate, aChannelId, "");
+        // accessToken.addPrivilege(Privileges.kJoinChannel,(uint)(Utils.getTimestamp()+300));
+        // string strTokenKey = accessToken.build();
+        string strTokenKey = aTokenKey;
         
         Debug.Log($"[AgoraLogin] Voice Chat Token: {strTokenKey}");
         // m_rtcEngine.JoinChannelByKey(strTokenKey, aChannelId, "", (uint)UnityEngine.Random.Range(1,999));

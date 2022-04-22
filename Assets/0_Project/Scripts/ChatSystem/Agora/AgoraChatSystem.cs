@@ -199,6 +199,7 @@ namespace Chat.Agora
             switch (aChannelConnectionStatus.eConnectionState)
             {
                 case CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED:
+                    Application.Quit();
                     break;
                 case CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTING:
                     m_rectJoinNetworkUi.gameObject.SetActive(false);

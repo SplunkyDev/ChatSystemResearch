@@ -46,7 +46,6 @@ public class AgoraConnectionStatus : IChatConnectionEvents, IDisposable
     
     private void OnConnectionChange(CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
     {
-        Debug.Log($"[{GetType()}] Connection state: {state} Reason: {reason}");
         ChannelConnectionStatus channelConnectionStatus = new ChannelConnectionStatus(state, reason);
         OnConnectionStatus?.Invoke(channelConnectionStatus);
     }

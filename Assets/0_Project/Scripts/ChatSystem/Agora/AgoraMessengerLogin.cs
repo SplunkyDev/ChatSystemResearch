@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using agora_gaming_rtc;
 using agora_rtm;
-using AgoraIO.AccessToken;
+using AgoraIO.Media;
 using Chat.Agora;
 using UnityEngine;
 
@@ -70,7 +70,7 @@ public class AgoraMessengerLogin : IChatLoginServices, IDisposable
         m_strUsername = aDisplayName;
         
         //Generate token for real time messaging using username here 
-        AgoraIO.AccessToken.AccessToken accessToken =
+        AccessToken accessToken =
             new AccessToken(m_strAppId, m_strAppCertificate, aDisplayName, "");
         accessToken.addPrivilege(Privileges.kRtmLogin,(uint)(Utils.getTimestamp()+90));
         m_strTokenKey = accessToken.build();

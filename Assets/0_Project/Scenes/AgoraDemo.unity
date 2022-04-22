@@ -482,34 +482,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1107321768344242486, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1107321768344242486, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1107321768443684864, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1107321768443684864, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1107321768443684864, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -17
-      objectReference: {fileID: 0}
-    - target: {fileID: 1107321768480490728, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1107321769157974646, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -504.94922
-      objectReference: {fileID: 0}
     - target: {fileID: 1107321769721567107, guid: 710595b02b86d3b46b2638bdb7f1a6a7, type: 3}
       propertyPath: m_Name
       value: Canvas_Agora

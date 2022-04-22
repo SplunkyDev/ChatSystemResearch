@@ -32,10 +32,10 @@ namespace Chat
         {
             if (m_chatSystem != null)
             {
-                string strPeerUSerName = m_inputFieldPeer.text;
-                if (string.IsNullOrEmpty(strPeerUSerName))
+                string strPeerUserName = m_inputFieldPeer.text;
+                if (!string.IsNullOrEmpty(strPeerUserName))
                 {
-                    m_chatSystem.SenChatMessageToSpecificUser(strPeerUSerName,m_inputFieldMessage.text);
+                    m_chatSystem.SenChatMessageToSpecificUser(strPeerUserName,m_inputFieldMessage.text);
                 }
                 else
                 {

@@ -159,12 +159,13 @@ namespace Chat.Agora
         
         public void SendChatMessageToAll(string aMessage)
         { 
-            Debug.LogWarning($"[ChatSystem] Send message: {aMessage}");
+            Debug.Log($"<color=green>[ChatSystem] Send message to all users in channel: {aMessage}</color>");
             m_messageService.SendMessageToAll(aMessage);
         }
 
         public void SenChatMessageToSpecificUser(string aUserName, string aMessage)
         {
+            Debug.Log($"<color=green>[ChatSystem] Send message to {aUserName} users in channel: {aMessage}</color>");
             m_messageService.SendMessageToSpecifUser(aUserName,aMessage);
         }
 

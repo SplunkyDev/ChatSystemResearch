@@ -59,6 +59,7 @@ public class AgoraMessengerService :  IChatMessageService, IDisposable
             Debug.LogError($"[{GetType()}][SendMessageToAll] Channel reference is null,cannot send message");
             return;
         }
+        Debug.Log($"<color=green>[{GetType().Name}] Send message to all users in channel: {aMessage}</color>");
         m_rtmChannel.SendMessage(m_rtmClient.CreateMessage(aMessage));
     }
 
@@ -69,6 +70,7 @@ public class AgoraMessengerService :  IChatMessageService, IDisposable
             Debug.LogError($"[{GetType()}][SendMessageToSpecifUser] Client reference is null,cannot send peer to peer message");
             return;
         }
+        Debug.Log($"<color=green>[{GetType().Name}] Send message to {aUsername} user in channel: {aMessage}</color>");
         m_rtmClient.SendMessageToPeer(aUsername, m_rtmClient.CreateMessage(aMessage));
     }
 
